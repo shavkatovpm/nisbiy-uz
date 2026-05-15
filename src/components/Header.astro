@@ -34,54 +34,195 @@ const isActive = (href: string) =>
 
       <button
         type="button"
-        class="sm:hidden inline-flex items-center justify-center size-9 rounded-full hover:bg-[color:var(--color-paper-soft)] dark:hover:bg-stone-800"
+        class="burger-btn sm:hidden inline-flex items-center justify-center size-10 rounded-full hover:bg-[color:var(--color-paper-soft)] dark:hover:bg-stone-800 transition-colors"
         aria-label="Menyuni ochish"
         aria-expanded="false"
         aria-controls="mobile-nav"
         data-nav-toggle
       >
-        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <line x1="4" y1="7" x2="20" y2="7" />
-          <line x1="4" y1="12" x2="20" y2="12" />
-          <line x1="4" y1="17" x2="20" y2="17" />
-        </svg>
+        <span aria-hidden="true" class="burger relative block w-[18px] h-[14px]">
+          <span class="burger-line absolute left-0 right-0 top-0 h-[1.6px] bg-current rounded-full"></span>
+          <span class="burger-line absolute left-0 right-0 top-[6.2px] h-[1.6px] bg-current rounded-full"></span>
+          <span class="burger-line absolute left-0 right-0 top-[12.4px] h-[1.6px] bg-current rounded-full"></span>
+        </span>
       </button>
     </div>
+  </div>
 
-    <nav
-      id="mobile-nav"
-      aria-label="Mobil navigatsiya"
-      class="sm:hidden hidden pb-3 flex-col gap-1 text-sm"
-      data-nav-mobile
-    >
-      {
-        nav.map((item) => (
-          <a
-            href={item.href}
-            aria-current={isActive(item.href) ? 'page' : undefined}
-            class:list={[
-              'block px-3 py-2 rounded-lg',
-              isActive(item.href)
-                ? 'bg-[color:var(--color-paper-soft)] dark:bg-stone-800'
-                : 'text-[color:var(--color-muted)] hover:bg-[color:var(--color-paper-soft)] dark:hover:bg-stone-800',
-            ]}
-          >
-            {item.label}
-          </a>
-        ))
-      }
-    </nav>
+  <!-- Mobile menu (absolute, doesn't push content) -->
+  <div
+    id="mobile-nav-wrap"
+    class="mobile-nav-wrap sm:hidden absolute top-full inset-x-0 pointer-events-none"
+    aria-hidden="true"
+    data-nav-mobile
+  >
+    <div class="mx-auto max-w-[var(--container-wide)] px-4">
+      <nav
+        aria-label="Mobil navigatsiya"
+        class="mobile-nav mt-2 rounded-2xl border border-[color:var(--color-line)] dark:border-stone-800 bg-[color:var(--color-paper)]/95 dark:bg-[color:var(--color-ink-soft)]/95 backdrop-blur-xl shadow-[0_8px_30px_-12px_rgba(0,0,0,0.18)] dark:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.6)] p-2 overflow-hidden"
+      >
+        {
+          nav.map((item) => (
+            <a
+              href={item.href}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+              data-nav-link
+              class:list={[
+                'mobile-nav-item group relative flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-sm font-medium',
+                isActive(item.href)
+                  ? 'bg-[color:var(--color-paper-soft)] dark:bg-stone-800/80 text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)]'
+                  : 'text-[color:var(--color-muted)] hover:bg-[color:var(--color-paper-soft)]/60 dark:hover:bg-stone-800/40 hover:text-[color:var(--color-ink)] dark:hover:text-[color:var(--color-paper)]',
+              ]}
+            >
+              <span class="relative">
+                {item.label}
+                {isActive(item.href) && (
+                  <span aria-hidden="true" class="absolute -left-2.5 top-1/2 -translate-y-1/2 size-1.5 rounded-full bg-[color:var(--color-accent)]"></span>
+                )}
+              </span>
+              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-30 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </a>
+          ))
+        }
+        <div aria-hidden="true" class="mt-2 pt-3 px-4 border-t border-[color:var(--color-line)]/60 dark:border-stone-800/60 flex items-center justify-between text-[10px] uppercase tracking-wider text-[color:var(--color-muted)]">
+          <span>AI uchun</span>
+          <span class="flex items-center gap-3">
+            <a href="/llms.txt" class="hover:text-[color:var(--color-ink)] dark:hover:text-[color:var(--color-paper)]">llms.txt</a>
+            <span aria-hidden="true">·</span>
+            <a href="/rss.xml" class="hover:text-[color:var(--color-ink)] dark:hover:text-[color:var(--color-paper)]">RSS</a>
+          </span>
+        </div>
+      </nav>
+    </div>
   </div>
 </header>
 
+<style>
+  /* Burger → X morph */
+  .burger-line {
+    transform-origin: center;
+    transition:
+      transform 0.42s cubic-bezier(0.65, 0, 0.35, 1),
+      opacity 0.2s ease,
+      width 0.3s ease;
+  }
+  [aria-expanded='true'] .burger-line:nth-child(1) {
+    transform: translateY(6.2px) rotate(45deg);
+  }
+  [aria-expanded='true'] .burger-line:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0.3);
+  }
+  [aria-expanded='true'] .burger-line:nth-child(3) {
+    transform: translateY(-6.2px) rotate(-45deg);
+  }
+
+  /* Mobile menu container — closed by default */
+  .mobile-nav-wrap {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.32s ease, visibility 0s linear 0.32s;
+  }
+  .mobile-nav-wrap.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 0.32s ease, visibility 0s linear 0s;
+  }
+
+  /* Nav panel — slide in from top + scale */
+  .mobile-nav {
+    transform: translateY(-12px) scale(0.97);
+    transform-origin: top center;
+    opacity: 0;
+    transition:
+      transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.32s ease;
+  }
+  .mobile-nav-wrap.open .mobile-nav {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  /* Stagger links in */
+  .mobile-nav-item {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition:
+      opacity 0.3s ease,
+      transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: 0ms;
+  }
+  .mobile-nav-wrap.open .mobile-nav-item {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .mobile-nav-wrap.open .mobile-nav-item:nth-child(1) {
+    transition-delay: 90ms;
+  }
+  .mobile-nav-wrap.open .mobile-nav-item:nth-child(2) {
+    transition-delay: 150ms;
+  }
+  .mobile-nav-wrap.open .mobile-nav-item:nth-child(3) {
+    transition-delay: 210ms;
+  }
+  .mobile-nav-wrap.open .mobile-nav-item:nth-child(4) {
+    transition-delay: 270ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .burger-line,
+    .mobile-nav,
+    .mobile-nav-item,
+    .mobile-nav-wrap {
+      transition-duration: 0.001s !important;
+    }
+  }
+</style>
+
 <script>
   const btn = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
-  const menu = document.querySelector<HTMLElement>('[data-nav-mobile]');
-  if (btn && menu) {
-    btn.addEventListener('click', () => {
-      const open = menu.classList.toggle('hidden') === false;
-      menu.classList.toggle('flex', open);
-      btn.setAttribute('aria-expanded', String(open));
-    });
+  const wrap = document.querySelector<HTMLElement>('[data-nav-mobile]');
+  const links = wrap?.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');
+
+  function setOpen(open: boolean) {
+    if (!btn || !wrap) return;
+    wrap.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Menyuni yopish' : 'Menyuni ochish');
+    wrap.setAttribute('aria-hidden', String(!open));
   }
+
+  btn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setOpen(btn.getAttribute('aria-expanded') !== 'true');
+  });
+
+  // Close on link tap
+  links?.forEach((link) => link.addEventListener('click', () => setOpen(false)));
+
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!wrap || !btn) return;
+    if (btn.getAttribute('aria-expanded') !== 'true') return;
+    const target = e.target as Node;
+    if (!wrap.contains(target) && !btn.contains(target)) setOpen(false);
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && btn?.getAttribute('aria-expanded') === 'true') {
+      setOpen(false);
+      btn.focus();
+    }
+  });
+
+  // Close on resize-up to sm+ breakpoint
+  const mql = window.matchMedia('(min-width: 640px)');
+  mql.addEventListener('change', (e) => {
+    if (e.matches) setOpen(false);
+  });
 </script>
