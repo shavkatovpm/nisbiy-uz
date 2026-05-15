@@ -1,0 +1,87 @@
+---
+import { nav, site } from '../lib/site';
+import Logo from './Logo.astro';
+const pathname = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? pathname === '/' : pathname.startsWith(href);
+---
+
+<header class="sticky top-0 z-50 backdrop-blur-md bg-[color:var(--color-paper)]/80 dark:bg-[color:var(--color-ink)]/80 border-b border-[color:var(--color-line)] dark:border-stone-800">
+  <div class="mx-auto max-w-[var(--container-wide)] px-4 sm:px-6">
+    <div class="flex h-14 items-center justify-between">
+      <a href="/" class="inline-flex items-center" aria-label={`${site.name} — bosh sahifa`}>
+        <Logo size={20} />
+      </a>
+
+      <nav aria-label="Asosiy navigatsiya" class="hidden sm:flex items-center gap-1 text-sm">
+        {
+          nav.map((item) => (
+            <a
+              href={item.href}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+              class:list={[
+                'px-3 py-1.5 rounded-full transition-colors',
+                isActive(item.href)
+                  ? 'bg-[color:var(--color-paper-soft)] dark:bg-stone-800 text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)]'
+                  : 'text-[color:var(--color-muted)] hover:text-[color:var(--color-ink)] dark:hover:text-[color:var(--color-paper)]',
+              ]}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <button
+        type="button"
+        class="sm:hidden inline-flex items-center justify-center size-9 rounded-full hover:bg-[color:var(--color-paper-soft)] dark:hover:bg-stone-800"
+        aria-label="Menyuni ochish"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        data-nav-toggle
+      >
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="4" y1="7" x2="20" y2="7" />
+          <line x1="4" y1="12" x2="20" y2="12" />
+          <line x1="4" y1="17" x2="20" y2="17" />
+        </svg>
+      </button>
+    </div>
+
+    <nav
+      id="mobile-nav"
+      aria-label="Mobil navigatsiya"
+      class="sm:hidden hidden pb-3 flex-col gap-1 text-sm"
+      data-nav-mobile
+    >
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+            class:list={[
+              'block px-3 py-2 rounded-lg',
+              isActive(item.href)
+                ? 'bg-[color:var(--color-paper-soft)] dark:bg-stone-800'
+                : 'text-[color:var(--color-muted)] hover:bg-[color:var(--color-paper-soft)] dark:hover:bg-stone-800',
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+  const menu = document.querySelector<HTMLElement>('[data-nav-mobile]');
+  if (btn && menu) {
+    btn.addEventListener('click', () => {
+      const open = menu.classList.toggle('hidden') === false;
+      menu.classList.toggle('flex', open);
+      btn.setAttribute('aria-expanded', String(open));
+    });
+  }
+</script>

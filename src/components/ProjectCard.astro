@@ -1,0 +1,45 @@
+---
+import { categoryLabels, ratingLabels } from '../lib/site';
+import RatingBadge from './RatingBadge.astro';
+
+interface Props {
+  entry: {
+    id: string;
+    data: {
+      title: string;
+      summary: string;
+      category: keyof typeof categoryLabels;
+      rating: keyof typeof ratingLabels;
+      updatedAt?: Date;
+      publishedAt: Date;
+    };
+  };
+}
+
+const { entry } = Astro.props;
+const { title, summary, category, rating, publishedAt, updatedAt } = entry.data;
+const slug = entry.id.replace(/\.[^.]+$/, '');
+const date = updatedAt ?? publishedAt;
+---
+
+<article class="group">
+  <a
+    href={`/projects/${slug}`}
+    class="block rounded-2xl border border-[color:var(--color-line)] dark:border-stone-800 p-5 sm:p-6 transition-all hover:border-[color:var(--color-ink)]/30 dark:hover:border-stone-600 hover:-translate-y-0.5"
+  >
+    <div class="flex items-center gap-2 text-xs text-[color:var(--color-muted)]">
+      <span class="uppercase tracking-wider">{categoryLabels[category]}</span>
+      <span aria-hidden="true">·</span>
+      <time datetime={date.toISOString()}>
+        {new Intl.DateTimeFormat('uz-UZ', { year: 'numeric', month: 'short', day: 'numeric' }).format(date)}
+      </time>
+    </div>
+    <h3 class="mt-2 text-xl font-semibold tracking-tight text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)] group-hover:text-[color:var(--color-accent)] transition-colors">
+      {title}
+    </h3>
+    <p class="mt-2 text-sm text-[color:var(--color-muted)] line-clamp-3 leading-relaxed">{summary}</p>
+    <div class="mt-4">
+      <RatingBadge rating={rating} size="sm" />
+    </div>
+  </a>
+</article>

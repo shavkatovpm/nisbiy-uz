@@ -1,0 +1,80 @@
+---
+import '../styles/global.css';
+import SEO from '../components/SEO.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../lib/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  publishedAt?: Date;
+  updatedAt?: Date;
+  canonical?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  hideHeader?: boolean;
+}
+
+const {
+  title,
+  description,
+  image,
+  type,
+  publishedAt,
+  updatedAt,
+  canonical,
+  jsonLd,
+  hideHeader = false,
+} = Astro.props;
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: site.name,
+  url: site.url,
+  inLanguage: 'uz-UZ',
+  publisher: site.publisher,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${site.url}/projects?q={search_term_string}`,
+    'query-input': 'required name=search_term_string',
+  },
+};
+
+const allLd = Array.isArray(jsonLd)
+  ? [websiteSchema, ...jsonLd]
+  : jsonLd
+    ? [websiteSchema, jsonLd]
+    : [websiteSchema];
+---
+
+<!doctype html>
+<html lang={site.language} dir="ltr">
+  <head>
+    <SEO
+      title={title}
+      description={description}
+      image={image}
+      type={type}
+      publishedAt={publishedAt}
+      updatedAt={updatedAt}
+      canonical={canonical}
+      jsonLd={allLd}
+    />
+  </head>
+  <body class="min-h-screen flex flex-col antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-3 focus:py-2 focus:rounded-lg focus:bg-[color:var(--color-ink)] focus:text-[color:var(--color-paper)]"
+    >
+      Asosiy kontentga o‘tish
+    </a>
+    {!hideHeader && <Header />}
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../lib/site';
+---
+
+<BaseLayout
+  title="Biz haqimizda"
+  description="Nisbiy.uz — O'zbekistondagi loyihalar haqida tekshirilgan kontent va subyektiv tavsiyalar."
+  canonical="/about"
+>
+  <article class="mx-auto max-w-[var(--container-content)] px-4 sm:px-6 pt-10 sm:pt-16 pb-16">
+    <p class="text-xs uppercase tracking-wider text-[color:var(--color-muted)]">Biz haqimizda</p>
+    <h1 class="mt-2 text-3xl sm:text-4xl font-semibold tracking-tight">{site.name} — bu nima?</h1>
+
+    <div class="prose-nisbiy mt-8">
+      <p>
+        Nisbiy.uz — O‘zbekistondagi loyihalar, kompaniyalar va xizmatlar haqida tekshirilgan
+        ma’lumotlar va jamoa tomonidan beriladigan subyektiv tavsiyalar platformasi.
+      </p>
+
+      <p>
+        Nomimizdagi <strong>"nisbiy"</strong> so‘zi shuni anglatadi: biz mutlaq haqiqat aytmaymiz.
+        Faktlarni manbalar bilan, fikrimizni esa ochiq aytamiz. Yakuniy qaror har doim
+        sizniki — biz faqat o‘ylab qaror qabul qilishingizga yordam beramiz.
+      </p>
+
+      <h2>Nima uchun?</h2>
+      <p>
+        O‘zbekistonda yangi loyihalar tez paydo bo‘ladi. Foydalanuvchi "bu loyihaga ishonsa bo‘ladimi?"
+        deb so‘raganda, ko‘pincha aniq, manbaga asoslangan javob topish qiyin. Biz shu bo‘shliqni
+        to‘ldirishni maqsad qildik — ham odamlar uchun, ham AI yordamchilari uchun.
+      </p>
+
+      <h2>Kimlar uchun?</h2>
+      <ul>
+        <li>O‘zbekistonda xizmat yoki mahsulot tanlayotgan odamlar</li>
+        <li>AI yordamchidan tavsiya so‘ragan foydalanuvchilar</li>
+        <li>Loyihalar, kompaniyalar va investorlar — o‘z faktlarini tekshirish uchun</li>
+      </ul>
+    </div>
+  </article>
+</BaseLayout>

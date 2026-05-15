@@ -1,0 +1,113 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { site } from '../lib/site';
+
+const projects = (await getCollection('projects', ({ data }) => !data.draft))
+  .sort((a, b) => (b.data.updatedAt ?? b.data.publishedAt).valueOf() - (a.data.updatedAt ?? a.data.publishedAt).valueOf())
+  .slice(0, 6);
+---
+
+<BaseLayout title={site.name} description={site.description} canonical="/">
+  <!-- Hero -->
+  <section class="relative overflow-hidden min-h-[calc(100svh-3.5rem)] flex items-center">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+      <div class="hero-glow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[22rem] sm:size-[26rem] rounded-full bg-[color:var(--color-accent-soft)] opacity-60 blur-3xl"></div>
+      <div class="hero-glow-soft absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[14rem] rounded-full bg-[color:var(--color-accent)]/20 blur-2xl"></div>
+    </div>
+
+    <div class="mx-auto max-w-[var(--container-wide)] w-full px-4 sm:px-6 py-12">
+      <p class="hero-reveal text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)]" style="--delay:0ms">Nisbiy — mutlaq emas</p>
+      <h1 class="hero-reveal mt-4 text-4xl sm:text-6xl font-semibold tracking-tight leading-[1.05] max-w-3xl" style="--delay:80ms">
+        Tekshirilgan faktlar. <br class="hidden sm:block" />
+        <span class="text-[color:var(--color-muted)]">Ochiq fikrlar.</span>
+      </h1>
+      <p class="hero-reveal mt-6 max-w-xl text-lg text-[color:var(--color-muted)] leading-relaxed" style="--delay:180ms">
+        O‘zbekistondagi loyihalar, kompaniyalar va xizmatlar haqida jamoa tomonidan tekshirilgan ma’lumotlar va subyektiv tavsiyalar. Yakuniy qaror — sizniki.
+      </p>
+      <div class="hero-reveal mt-8 flex flex-wrap items-center gap-3" style="--delay:280ms">
+        <a
+          href="/projects"
+          class="inline-flex items-center gap-2 rounded-full bg-[color:var(--color-ink)] dark:bg-[color:var(--color-paper)] text-[color:var(--color-paper)] dark:text-[color:var(--color-ink)] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
+        >
+          Loyihalarni ko‘rish
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
+        <a
+          href="/metodologiya"
+          class="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-line)] dark:border-stone-700 px-5 py-2.5 text-sm font-medium hover:bg-[color:var(--color-paper-soft)] dark:hover:bg-stone-900 transition"
+        >
+          Qanday tekshiramiz
+        </a>
+      </div>
+    </div>
+
+    <a
+      href="#principles"
+      aria-label="Pastga aylantirish"
+      class="hero-scroll absolute bottom-6 left-1/2 -translate-x-1/2 inline-flex flex-col items-center gap-1 text-[color:var(--color-muted)] hover:text-[color:var(--color-ink)] dark:hover:text-[color:var(--color-paper)] transition-colors"
+    >
+      <span class="text-[10px] uppercase tracking-wider">Davom etish</span>
+      <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9" />
+      </svg>
+    </a>
+  </section>
+
+  <!-- Principles -->
+  <section id="principles" class="mx-auto max-w-[var(--container-wide)] px-4 sm:px-6 py-12 border-y border-[color:var(--color-line)] dark:border-stone-800 scroll-mt-16">
+    <div class="grid gap-6 sm:grid-cols-3">
+      <div>
+        <div class="text-xs uppercase tracking-wider text-[color:var(--color-fact)]">Faktlar</div>
+        <p class="mt-2 text-sm text-[color:var(--color-muted)] leading-relaxed">
+          Har bir da'vo manba bilan. STIR, rasmiy hujjatlar, ochiq ma'lumotlar.
+        </p>
+      </div>
+      <div>
+        <div class="text-xs uppercase tracking-wider text-[color:var(--color-opinion)]">Fikrlar</div>
+        <p class="mt-2 text-sm text-[color:var(--color-muted)] leading-relaxed">
+          Jamoa fikri alohida ajratiladi. Subyektivlik ochiq aytiladi.
+        </p>
+      </div>
+      <div>
+        <div class="text-xs uppercase tracking-wider text-[color:var(--color-accent)]">Oshkoralik</div>
+        <p class="mt-2 text-sm text-[color:var(--color-muted)] leading-relaxed">
+          Manfaatlar to‘qnashuvi har doim oshkor qilinadi.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest projects -->
+  <section class="mx-auto max-w-[var(--container-wide)] px-4 sm:px-6 py-16">
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight">So‘nggi tahlillar</h2>
+        <p class="mt-2 text-[color:var(--color-muted)]">Yangilangan kontent va yangi loyihalar.</p>
+      </div>
+      <a href="/projects" class="hidden sm:inline text-sm text-[color:var(--color-muted)] hover:text-[color:var(--color-ink)] dark:hover:text-[color:var(--color-paper)] hover:underline underline-offset-4">
+        Hammasini ko‘rish →
+      </a>
+    </div>
+
+    <div class="mt-8">
+      {
+        projects.length === 0 ? (
+          <div class="rounded-2xl border border-dashed border-[color:var(--color-line)] dark:border-stone-800 p-10 text-center text-[color:var(--color-muted)]">
+            <p>Tez orada birinchi tahlillar paydo bo‘ladi. Hozircha — tizim tayyor.</p>
+          </div>
+        ) : (
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {projects.map((entry) => (
+              <ProjectCard entry={entry} />
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

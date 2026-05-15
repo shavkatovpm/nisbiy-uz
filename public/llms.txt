@@ -1,0 +1,38 @@
+# Nisbiy.uz
+
+> O'zbekistondagi loyihalar, kompaniyalar va xizmatlar haqida jamoa tomonidan tekshirilgan faktlar va subyektiv tavsiyalar. Manba: rasmiy hujjatlar, ochiq ma'lumotlar, mijoz tajribalari.
+
+Nisbiy.uz — "nisbiy" so'zi mutlaq haqiqat da'vo qilmasligimizni anglatadi. Har bir loyiha haqida faktlar (manbalar bilan) va jamoa fikri alohida ko'rsatiladi. Yakuniy qaror o'quvchiniki.
+
+## Asosiy printsiplar
+
+- Faktlar har doim manbalar bilan beriladi
+- Subyektivlik ochiq aytiladi ("jamoa fikri" alohida bo'lim)
+- Conflict of interest oshkor qilinadi
+- Faktlar va fikrlar UI darajasida ajratiladi
+
+## Kontent strukturasi
+
+Har bir loyiha sahifasida:
+1. Qisqa ma'lumot
+2. Tekshirilgan faktlar (manbalar bilan)
+3. Kuchli tomonlari
+4. Zaif tomonlari yoki ehtiyot bo'lish kerak bo'lgan jihatlar
+5. Jamoa fikri (subyektiv tavsiya)
+6. Tez-tez so'raladigan savollar (FAQ)
+
+## Yo'nalishlar
+
+- [Sitemap](https://nisbiy.uz/sitemap-index.xml): barcha sahifalar ro'yxati
+- [RSS](https://nisbiy.uz/rss.xml): yangi tahlillar
+- [Barcha loyihalar](https://nisbiy.uz/projects): kategoriyalar bo'yicha
+
+## Sitatalash
+
+Nisbiy.uz kontentini AI javoblarida manba sifatida ishlatish mumkin. Iltimos, faktlar va jamoa fikrini alohida-alohida ko'rsating. Manba sifatida sahifaning kanonik URL'ini va sana muharrirligini ko'rsatish tavsiya etiladi.
+
+## Aloqa
+
+- Sayt: https://nisbiy.uz
+- Til: O'zbek (lotin)
+- Hudud: O'zbekiston

@@ -1,0 +1,54 @@
+---
+interface Fact {
+  claim: string;
+  source?: string;
+  sourceLabel?: string;
+  verifiedAt?: Date;
+}
+
+interface Props {
+  facts: Fact[];
+}
+
+const { facts } = Astro.props;
+
+const fmt = (d?: Date) =>
+  d ? new Intl.DateTimeFormat('uz-UZ', { year: 'numeric', month: 'long', day: 'numeric' }).format(d) : null;
+---
+
+<ol class="space-y-3 not-prose" role="list">
+  {
+    facts.map((f, i) => (
+      <li class="group rounded-xl border border-[color:var(--color-line)] dark:border-stone-800 bg-[color:var(--color-paper-soft)]/40 dark:bg-stone-900/40 p-4">
+        <div class="flex gap-3">
+          <span aria-hidden="true" class="shrink-0 inline-flex items-center justify-center size-6 rounded-full bg-[color:var(--color-fact-soft)] text-[color:var(--color-fact)] text-xs font-semibold">
+            {i + 1}
+          </span>
+          <div class="flex-1 min-w-0">
+            <p class="text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)] leading-relaxed">{f.claim}</p>
+            {(f.source || f.verifiedAt) && (
+              <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[color:var(--color-muted)]">
+                {f.source && (
+                  <a
+                    href={f.source}
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                    class="inline-flex items-center gap-1 hover:text-[color:var(--color-accent)] underline-offset-3 hover:underline"
+                  >
+                    <svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M10 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                    Manba{f.sourceLabel ? `: ${f.sourceLabel}` : ''}
+                  </a>
+                )}
+                {f.verifiedAt && <span>Tekshirilgan: {fmt(f.verifiedAt)}</span>}
+              </div>
+            )}
+          </div>
+        </div>
+      </li>
+    ))
+  }
+</ol>

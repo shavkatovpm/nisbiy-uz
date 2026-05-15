@@ -1,0 +1,20 @@
+---
+interface Props {
+  kind: 'fact' | 'opinion' | 'warn' | 'strength';
+  label: string;
+}
+
+const { kind, label } = Astro.props;
+
+const styles: Record<string, string> = {
+  fact: 'bg-[color:var(--color-fact-soft)] text-[color:var(--color-fact)]',
+  strength: 'bg-[color:var(--color-fact-soft)] text-[color:var(--color-fact)]',
+  opinion: 'bg-[color:var(--color-opinion-soft)] text-[color:var(--color-opinion)]',
+  warn: 'bg-[color:var(--color-warn-soft)] text-[color:var(--color-warn)]',
+};
+---
+
+<span class:list={['inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider', styles[kind]]}>
+  <span aria-hidden="true" class="size-1.5 rounded-full bg-current"></span>
+  {label}
+</span>

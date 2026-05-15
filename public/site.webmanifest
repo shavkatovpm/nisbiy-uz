@@ -1,0 +1,17 @@
+{
+  "name": "Nisbiy.uz",
+  "short_name": "Nisbiy",
+  "description": "O'zbekistondagi loyihalar haqida tekshirilgan faktlar va jamoa tavsiyalari",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "lang": "uz",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
