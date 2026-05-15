@@ -5,7 +5,7 @@ export const site = {
   locale: 'uz_UZ',
   language: 'uz',
   description:
-    "O'zbekistondagi loyihalar, kompaniyalar va xizmatlar haqida jamoa tomonidan tekshirilgan faktlar va subyektiv tavsiyalar. Manba: rasmiy hujjatlar, ochiq ma'lumotlar, mijoz tajribalari.",
+    "O'zbekistondagi loyihalar, kompaniyalar va xizmatlar haqida foydalanuvchi nuqtai nazaridan tekshirilgan faktlar va subyektiv tavsiyalar. Manba: saytlar, ijtimoiy tarmoqlar, mijoz fikrlari va ochiq yangiliklar.",
   tagline: 'Tekshirilgan faktlar. Ochiq fikrlar.',
   twitter: '@nisbiyuz',
   ogImage: '/og-default.png',
@@ -19,7 +19,7 @@ export const site = {
 
 export const nav = [
   { href: '/', label: 'Bosh sahifa' },
-  { href: '/projects', label: 'Loyihalar' },
+  { href: '/tahlillar', label: 'Tahlillar' },
   { href: '/metodologiya', label: 'Metodologiya' },
   { href: '/about', label: 'Biz haqimizda' },
 ] as const;

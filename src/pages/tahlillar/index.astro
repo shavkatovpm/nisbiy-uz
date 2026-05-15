@@ -12,14 +12,14 @@ const cats = Array.from(new Set(projects.map((p) => p.data.category)));
 ---
 
 <BaseLayout
-  title="Barcha loyihalar"
-  description="O'zbekistondagi loyihalar, kompaniyalar va xizmatlar haqida tekshirilgan tahlillar."
-  canonical="/projects"
+  title="Barcha tahlillar"
+  description="O'zbekistondagi loyihalar, kompaniyalar va xizmatlar haqida foydalanuvchi nuqtai nazaridan tekshirilgan tahlillar."
+  canonical="/tahlillar"
 >
   <section class="mx-auto max-w-[var(--container-wide)] px-4 sm:px-6 pt-10 sm:pt-16">
     <header class="max-w-2xl">
       <p class="text-xs uppercase tracking-wider text-[color:var(--color-muted)]">Katalog</p>
-      <h1 class="mt-2 text-3xl sm:text-4xl font-semibold tracking-tight">Barcha loyihalar</h1>
+      <h1 class="mt-2 text-3xl sm:text-4xl font-semibold tracking-tight">Barcha tahlillar</h1>
       <p class="mt-3 text-[color:var(--color-muted)]">
         Har bir loyiha haqida tekshirilgan faktlar va jamoa fikri. Manbalar har doim ko‘rsatiladi.
       </p>
@@ -29,14 +29,14 @@ const cats = Array.from(new Set(projects.map((p) => p.data.category)));
       cats.length > 0 && (
         <div class="mt-6 flex flex-wrap gap-2">
           <a
-            href="/projects"
+            href="/tahlillar"
             class="rounded-full border border-[color:var(--color-ink)] dark:border-[color:var(--color-paper)] bg-[color:var(--color-ink)] dark:bg-[color:var(--color-paper)] text-[color:var(--color-paper)] dark:text-[color:var(--color-ink)] px-3 py-1 text-xs"
           >
             Hammasi · {projects.length}
           </a>
           {cats.map((c) => (
             <a
-              href={`/projects?category=${c}`}
+              href={`/tahlillar?category=${c}`}
               class="rounded-full border border-[color:var(--color-line)] dark:border-stone-800 px-3 py-1 text-xs text-[color:var(--color-muted)] hover:text-[color:var(--color-ink)] dark:hover:text-[color:var(--color-paper)] hover:border-[color:var(--color-ink)]/30"
             >
               {categoryLabels[c]}

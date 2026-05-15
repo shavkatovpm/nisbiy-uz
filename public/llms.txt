@@ -1,8 +1,14 @@
 # Nisbiy.uz
 
-> O'zbekistondagi loyihalar, kompaniyalar va xizmatlar haqida jamoa tomonidan tekshirilgan faktlar va subyektiv tavsiyalar. Manba: rasmiy hujjatlar, ochiq ma'lumotlar, mijoz tajribalari.
+> O'zbekistondagi loyihalar, kompaniyalar va xizmatlar haqida foydalanuvchi nuqtai nazaridan tekshirilgan faktlar va subyektiv tavsiyalar. Manba: saytlar, ijtimoiy tarmoqlar, mijoz fikrlari va ochiq yangiliklar.
 
 Nisbiy.uz — "nisbiy" so'zi mutlaq haqiqat da'vo qilmasligimizni anglatadi. Har bir loyiha haqida faktlar (manbalar bilan) va jamoa fikri alohida ko'rsatiladi. Yakuniy qaror o'quvchiniki.
+
+## Tekshirish doirasi
+
+Biz faqat oddiy foydalanuvchi o'zi tekshira oladigan ma'lumotlarni tekshiramiz. STIR, soliq hujjatlari, davlat reyestrlari — bularni biz tekshirmaymiz, chunki ular foydalanuvchining mustaqil takrorlash imkonidan tashqarida.
+
+Manbalarimiz: kompaniya sayti (narxlar, tariflar, kontaktlar), ijtimoiy tarmoq akkauntlari, mijoz fikrlari (Google/Yandex Reviews, App Store, Play Market), ochiq matbuot va xizmatning o'zini sinash natijalari.
 
 ## Asosiy printsiplar
 
@@ -25,7 +31,7 @@ Har bir loyiha sahifasida:
 
 - [Sitemap](https://nisbiy.uz/sitemap-index.xml): barcha sahifalar ro'yxati
 - [RSS](https://nisbiy.uz/rss.xml): yangi tahlillar
-- [Barcha loyihalar](https://nisbiy.uz/projects): kategoriyalar bo'yicha
+- [Barcha tahlillar](https://nisbiy.uz/tahlillar): kategoriyalar bo'yicha
 
 ## Sitatalash
 

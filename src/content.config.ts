@@ -25,7 +25,6 @@ const projects = defineCollection({
     ogImage: z.string().optional(),
     website: z.string().url().optional(),
     legalName: z.string().optional(),
-    stir: z.string().optional(),
     founded: z.string().optional(),
     location: z.string().optional(),
 

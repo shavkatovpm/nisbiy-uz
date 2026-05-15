@@ -20,8 +20,10 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 const data = entry.data;
 const slug = entry.id.replace(/\.[^.]+$/, '');
-const canonical = `/projects/${slug}`;
+const canonical = `/tahlillar/${slug}`;
 const fullUrl = new URL(canonical, site.url).href;
+
+const pageTitle = `${data.title} — to‘liq tahlil va jamoa fikri`;
 
 const jsonLd = [
   ...projectJsonLd({
@@ -40,7 +42,7 @@ const jsonLd = [
   }),
   breadcrumbJsonLd([
     { name: 'Bosh sahifa', url: site.url },
-    { name: 'Loyihalar', url: new URL('/projects', site.url).href },
+    { name: 'Tahlillar', url: new URL('/tahlillar', site.url).href },
     { name: data.title, url: fullUrl },
   ]),
 ];
@@ -53,7 +55,7 @@ const dateLabel = data.updatedAt ? 'Yangilangan' : 'Chop etilgan';
 ---
 
 <BaseLayout
-  title={data.title}
+  title={pageTitle}
   description={data.summary}
   image={data.ogImage ?? data.coverImage}
   type="article"
@@ -68,7 +70,7 @@ const dateLabel = data.updatedAt ? 'Yangilangan' : 'Chop etilgan';
       <ol class="flex items-center gap-1.5">
         <li><a href="/" class="hover:underline underline-offset-4">Bosh sahifa</a></li>
         <li aria-hidden="true">/</li>
-        <li><a href="/projects" class="hover:underline underline-offset-4">Loyihalar</a></li>
+        <li><a href="/tahlillar" class="hover:underline underline-offset-4">Tahlillar</a></li>
         <li aria-hidden="true">/</li>
         <li class="truncate text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)]">{data.title}</li>
       </ol>
@@ -113,23 +115,17 @@ const dateLabel = data.updatedAt ? 'Yangilangan' : 'Chop etilgan';
       </div>
 
       {
-        (data.legalName || data.stir || data.founded || data.location) && (
+        (data.legalName || data.founded || data.location) && (
           <dl class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm border-t border-[color:var(--color-line)] dark:border-stone-800 pt-4">
             {data.legalName && (
               <div class="flex justify-between sm:block">
-                <dt class="text-[color:var(--color-muted)]">Rasmiy nomi</dt>
+                <dt class="text-[color:var(--color-muted)]">Nomi</dt>
                 <dd>{data.legalName}</dd>
-              </div>
-            )}
-            {data.stir && (
-              <div class="flex justify-between sm:block">
-                <dt class="text-[color:var(--color-muted)]">STIR</dt>
-                <dd class="font-mono">{data.stir}</dd>
               </div>
             )}
             {data.founded && (
               <div class="flex justify-between sm:block">
-                <dt class="text-[color:var(--color-muted)]">Tashkil etilgan</dt>
+                <dt class="text-[color:var(--color-muted)]">Ish boshlagan</dt>
                 <dd>{data.founded}</dd>
               </div>
             )}
@@ -243,7 +239,7 @@ const dateLabel = data.updatedAt ? 'Yangilangan' : 'Chop etilgan';
 
     <!-- Footer of article -->
     <footer class="mt-12 border-t border-[color:var(--color-line)] dark:border-stone-800 pt-6 flex flex-wrap items-center justify-between gap-3 text-xs text-[color:var(--color-muted)]">
-      <a href="/projects" class="hover:underline underline-offset-4">← Barcha loyihalar</a>
+      <a href="/tahlillar" class="hover:underline underline-offset-4">← Barcha tahlillar</a>
       <span>Manba sifatida sitatalashda: <code class="font-mono">{fullUrl}</code></span>
     </footer>
   </article>

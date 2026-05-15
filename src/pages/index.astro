@@ -2,19 +2,24 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import { site } from '../lib/site';
+import RatingBadge from '../components/RatingBadge.astro';
+import { categoryLabels, site } from '../lib/site';
 
 const projects = (await getCollection('projects', ({ data }) => !data.draft))
-  .sort((a, b) => (b.data.updatedAt ?? b.data.publishedAt).valueOf() - (a.data.updatedAt ?? a.data.publishedAt).valueOf())
-  .slice(0, 6);
+  .sort((a, b) => (b.data.updatedAt ?? b.data.publishedAt).valueOf() - (a.data.updatedAt ?? a.data.publishedAt).valueOf());
+
+const featured = projects[0];
+const rest = projects.slice(1, 4);
+
+const featuredSlug = featured?.id.replace(/\.[^.]+$/, '');
 ---
 
 <BaseLayout title={site.name} description={site.description} canonical="/">
-  <!-- Hero -->
+  <!-- ════ SECTION 1: HERO ════ -->
   <section class="relative overflow-hidden min-h-[calc(100svh-3.5rem)] flex items-center">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
-      <div class="hero-glow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[22rem] sm:size-[26rem] rounded-full bg-[color:var(--color-accent-soft)] opacity-60 blur-3xl"></div>
-      <div class="hero-glow-soft absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[14rem] rounded-full bg-[color:var(--color-accent)]/20 blur-2xl"></div>
+      <div class="hero-glow absolute top-1/2 left-1/2 size-[22rem] sm:size-[26rem] rounded-full bg-[color:var(--color-accent-soft)] blur-3xl"></div>
+      <div class="hero-glow-soft absolute top-1/2 left-1/2 size-[14rem] rounded-full bg-[color:var(--color-accent)]/20 blur-2xl"></div>
     </div>
 
     <div class="mx-auto max-w-[var(--container-wide)] w-full px-4 sm:px-6 py-12">
@@ -24,33 +29,22 @@ const projects = (await getCollection('projects', ({ data }) => !data.draft))
         <span class="text-[color:var(--color-muted)]">Ochiq fikrlar.</span>
       </h1>
       <p class="hero-reveal mt-6 max-w-xl text-lg text-[color:var(--color-muted)] leading-relaxed" style="--delay:180ms">
-        O‘zbekistondagi loyihalar, kompaniyalar va xizmatlar haqida jamoa tomonidan tekshirilgan ma’lumotlar va subyektiv tavsiyalar. Yakuniy qaror — sizniki.
+        O‘zbekistondagi loyihalar, kompaniyalar va xizmatlar haqida foydalanuvchi nuqtai nazaridan tekshirilgan ma’lumotlar va subyektiv tavsiyalar. Yakuniy qaror — sizniki.
       </p>
       <div class="hero-reveal mt-8 flex flex-wrap items-center gap-3" style="--delay:280ms">
-        <a
-          href="/projects"
-          class="inline-flex items-center gap-2 rounded-full bg-[color:var(--color-ink)] dark:bg-[color:var(--color-paper)] text-[color:var(--color-paper)] dark:text-[color:var(--color-ink)] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
-        >
-          Loyihalarni ko‘rish
+        <a href="/tahlillar" class="inline-flex items-center gap-2 rounded-full bg-[color:var(--color-ink)] dark:bg-[color:var(--color-paper)] text-[color:var(--color-paper)] dark:text-[color:var(--color-ink)] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition">
+          Tahlillarni ko‘rish
           <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12" />
-            <polyline points="12 5 19 12 12 19" />
+            <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
           </svg>
         </a>
-        <a
-          href="/metodologiya"
-          class="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-line)] dark:border-stone-700 px-5 py-2.5 text-sm font-medium hover:bg-[color:var(--color-paper-soft)] dark:hover:bg-stone-900 transition"
-        >
+        <a href="/metodologiya" class="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-line)] dark:border-stone-700 px-5 py-2.5 text-sm font-medium hover:bg-[color:var(--color-paper-soft)] dark:hover:bg-stone-900 transition">
           Qanday tekshiramiz
         </a>
       </div>
     </div>
 
-    <a
-      href="#principles"
-      aria-label="Pastga aylantirish"
-      class="hero-scroll absolute bottom-6 left-1/2 -translate-x-1/2 inline-flex flex-col items-center gap-1 text-[color:var(--color-muted)] hover:text-[color:var(--color-ink)] dark:hover:text-[color:var(--color-paper)] transition-colors"
-    >
+    <a href="#printsiplar" aria-label="Pastga aylantirish" class="hero-scroll absolute bottom-6 left-1/2 inline-flex flex-col items-center gap-1 text-[color:var(--color-muted)] hover:text-[color:var(--color-ink)] dark:hover:text-[color:var(--color-paper)] transition-colors">
       <span class="text-[10px] uppercase tracking-wider">Davom etish</span>
       <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="6 9 12 15 18 9" />
@@ -58,56 +52,281 @@ const projects = (await getCollection('projects', ({ data }) => !data.draft))
     </a>
   </section>
 
-  <!-- Principles -->
-  <section id="principles" class="mx-auto max-w-[var(--container-wide)] px-4 sm:px-6 py-12 border-y border-[color:var(--color-line)] dark:border-stone-800 scroll-mt-16">
-    <div class="grid gap-6 sm:grid-cols-3">
-      <div>
-        <div class="text-xs uppercase tracking-wider text-[color:var(--color-fact)]">Faktlar</div>
-        <p class="mt-2 text-sm text-[color:var(--color-muted)] leading-relaxed">
-          Har bir da'vo manba bilan. STIR, rasmiy hujjatlar, ochiq ma'lumotlar.
-        </p>
-      </div>
-      <div>
-        <div class="text-xs uppercase tracking-wider text-[color:var(--color-opinion)]">Fikrlar</div>
-        <p class="mt-2 text-sm text-[color:var(--color-muted)] leading-relaxed">
-          Jamoa fikri alohida ajratiladi. Subyektivlik ochiq aytiladi.
-        </p>
-      </div>
-      <div>
-        <div class="text-xs uppercase tracking-wider text-[color:var(--color-accent)]">Oshkoralik</div>
-        <p class="mt-2 text-sm text-[color:var(--color-muted)] leading-relaxed">
-          Manfaatlar to‘qnashuvi har doim oshkor qilinadi.
-        </p>
+  <!-- ════ SECTION 2: PRINTSIPLAR ════ -->
+  <section
+    id="printsiplar"
+    class="relative min-h-[calc(100svh-3.5rem)] flex items-center border-t border-[color:var(--color-line)] dark:border-stone-800 overflow-hidden scroll-mt-14"
+  >
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 grid-pattern opacity-[0.35] dark:opacity-[0.18]"></div>
+
+    <div class="mx-auto max-w-[var(--container-wide)] w-full px-4 sm:px-6 py-20 sm:py-24">
+      <div class="grid gap-10 lg:gap-16 lg:grid-cols-[1fr_1.4fr] lg:items-start">
+        <!-- Left: section intro -->
+        <div class="lg:sticky lg:top-24 scroll-reveal" style="--delay:0ms">
+          <p class="text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)]">Bizning printsipimiz</p>
+          <h2 class="mt-4 text-3xl sm:text-5xl font-semibold tracking-tight leading-[1.05]">
+            Uch sodda qoida.
+          </h2>
+          <p class="mt-5 text-[color:var(--color-muted)] leading-relaxed max-w-md">
+            Har bir tahlilimiz shu uch printsipga asoslangan. Bittasi buzilsa, biz uni chop etmaymiz.
+          </p>
+          <a href="/metodologiya" class="mt-6 inline-flex items-center gap-2 text-sm font-medium hover:underline underline-offset-4">
+            To‘liq metodologiya
+            <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
+        </div>
+
+        <!-- Right: 3 manifesto cards with vertical connector -->
+        <ol class="relative space-y-10 sm:space-y-14" role="list">
+          <!-- vertical connector -->
+          <div aria-hidden="true" class="draw-line absolute left-[1.5rem] sm:left-[1.75rem] top-3 bottom-3 w-px bg-gradient-to-b from-[color:var(--color-fact)] via-[color:var(--color-opinion)] to-[color:var(--color-accent)] origin-top"></div>
+
+          <li class="scroll-reveal relative flex gap-5 sm:gap-7" style="--delay:120ms">
+            <div class="relative shrink-0">
+              <div class="flex items-center justify-center size-12 sm:size-14 rounded-full bg-[color:var(--color-fact-soft)] text-[color:var(--color-fact)] font-mono text-sm font-semibold ring-4 ring-[color:var(--color-paper)] dark:ring-[color:var(--color-ink)]">
+                01
+              </div>
+            </div>
+            <div class="flex-1 pt-2">
+              <div class="text-xs uppercase tracking-wider text-[color:var(--color-fact)] font-semibold">Faktlar</div>
+              <h3 class="mt-1 text-2xl sm:text-3xl font-semibold tracking-tight">Tekshirilgan ma‘lumotlar.</h3>
+              <p class="mt-3 text-[color:var(--color-muted)] leading-relaxed max-w-prose">
+                Manba ko‘rsatilmagan bironta da‘vo bizning tahlilda joy olmaydi. Saytlar, ijtimoiy tarmoqlar,
+                mijoz fikrlari — siz ham takrorlay oladigan manbalar.
+              </p>
+            </div>
+          </li>
+
+          <li class="scroll-reveal relative flex gap-5 sm:gap-7" style="--delay:220ms">
+            <div class="relative shrink-0">
+              <div class="flex items-center justify-center size-12 sm:size-14 rounded-full bg-[color:var(--color-opinion-soft)] text-[color:var(--color-opinion)] font-mono text-sm font-semibold ring-4 ring-[color:var(--color-paper)] dark:ring-[color:var(--color-ink)]">
+                02
+              </div>
+            </div>
+            <div class="flex-1 pt-2">
+              <div class="text-xs uppercase tracking-wider text-[color:var(--color-opinion)] font-semibold">Fikrlar</div>
+              <h3 class="mt-1 text-2xl sm:text-3xl font-semibold tracking-tight">Ochiq subyektivlik.</h3>
+              <p class="mt-3 text-[color:var(--color-muted)] leading-relaxed max-w-prose">
+                Bizning fikrimiz alohida bo‘limda, aniq belgilab beriladi. Fakt va fikr aralashtirilmaydi —
+                yakuniy qaror har doim sizniki.
+              </p>
+            </div>
+          </li>
+
+          <li class="scroll-reveal relative flex gap-5 sm:gap-7" style="--delay:320ms">
+            <div class="relative shrink-0">
+              <div class="flex items-center justify-center size-12 sm:size-14 rounded-full bg-[color:var(--color-accent-soft)] text-[color:var(--color-accent)] font-mono text-sm font-semibold ring-4 ring-[color:var(--color-paper)] dark:ring-[color:var(--color-ink)]">
+                03
+              </div>
+            </div>
+            <div class="flex-1 pt-2">
+              <div class="text-xs uppercase tracking-wider text-[color:var(--color-accent)] font-semibold">Oshkoralik</div>
+              <h3 class="mt-1 text-2xl sm:text-3xl font-semibold tracking-tight">Manfaatlar yashirilmaydi.</h3>
+              <p class="mt-3 text-[color:var(--color-muted)] leading-relaxed max-w-prose">
+                Reklama, sponsorlik yoki o‘z brendlarimiz haqida yozsak — sahifaning o‘zida aytib o‘tamiz.
+                Conflict of interest oshkoralikka aylanadi.
+              </p>
+            </div>
+          </li>
+        </ol>
       </div>
     </div>
   </section>
 
-  <!-- Latest projects -->
-  <section class="mx-auto max-w-[var(--container-wide)] px-4 sm:px-6 py-16">
-    <div class="flex items-end justify-between gap-4">
-      <div>
-        <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight">So‘nggi tahlillar</h2>
-        <p class="mt-2 text-[color:var(--color-muted)]">Yangilangan kontent va yangi loyihalar.</p>
-      </div>
-      <a href="/projects" class="hidden sm:inline text-sm text-[color:var(--color-muted)] hover:text-[color:var(--color-ink)] dark:hover:text-[color:var(--color-paper)] hover:underline underline-offset-4">
-        Hammasini ko‘rish →
-      </a>
-    </div>
+  <!-- ════ SECTION 3: SO'NGGI TAHLILLAR (magazine-style) ════ -->
+  <section class="relative min-h-[calc(100svh-3.5rem)] flex flex-col justify-center border-t border-[color:var(--color-line)] dark:border-stone-800 overflow-hidden">
+    <!-- diagonal background accent -->
+    <div aria-hidden="true" class="pointer-events-none absolute -top-32 -right-32 size-[28rem] rounded-full bg-[color:var(--color-opinion-soft)]/30 dark:bg-[color:var(--color-opinion)]/10 blur-3xl"></div>
 
-    <div class="mt-8">
-      {
-        projects.length === 0 ? (
-          <div class="rounded-2xl border border-dashed border-[color:var(--color-line)] dark:border-stone-800 p-10 text-center text-[color:var(--color-muted)]">
-            <p>Tez orada birinchi tahlillar paydo bo‘ladi. Hozircha — tizim tayyor.</p>
+    <div class="mx-auto max-w-[var(--container-wide)] w-full px-4 sm:px-6 py-20 sm:py-24">
+      <!-- Header -->
+      <div class="scroll-reveal flex items-end justify-between gap-4 flex-wrap">
+        <div>
+          <p class="text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)]">Yangi nashr</p>
+          <h2 class="mt-3 text-3xl sm:text-5xl font-semibold tracking-tight leading-[1.05]">
+            So‘nggi tahlillar.
+          </h2>
+          <p class="mt-3 text-[color:var(--color-muted)] max-w-md">
+            Yangilangan kontent va yangi loyihalar haqida tahlillarimiz.
+          </p>
+        </div>
+        <a href="/tahlillar" class="group inline-flex items-center gap-2 text-sm font-medium">
+          <span class="relative">
+            Barchasi
+            <span aria-hidden="true" class="absolute inset-x-0 -bottom-1 h-px bg-current scale-x-100 group-hover:scale-x-0 origin-right transition-transform duration-300"></span>
+            <span aria-hidden="true" class="absolute inset-x-0 -bottom-1 h-px bg-current scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 delay-150"></span>
+          </span>
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-0.5">
+            <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
+      </div>
+
+      {projects.length === 0 ? (
+        <div class="scroll-reveal mt-12 rounded-3xl border border-dashed border-[color:var(--color-line)] dark:border-stone-800 p-16 text-center text-[color:var(--color-muted)]" style="--delay:120ms">
+          <p class="text-lg">Tez orada birinchi tahlillar paydo bo‘ladi.</p>
+          <p class="mt-2 text-sm">Hozircha — tizim tayyor.</p>
+        </div>
+      ) : (
+        <div class="mt-10 sm:mt-14 grid gap-6 lg:grid-cols-5 lg:items-stretch">
+          <!-- Featured (big) -->
+          {featured && (
+            <a
+              href={`/tahlillar/${featuredSlug}`}
+              class="scroll-reveal group relative lg:col-span-3 rounded-3xl border border-[color:var(--color-line)] dark:border-stone-800 p-7 sm:p-10 flex flex-col overflow-hidden transition-all hover:border-[color:var(--color-ink)]/30 dark:hover:border-stone-600"
+              style="--delay:120ms"
+            >
+              <div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[color:var(--color-accent-soft)]/30 via-transparent to-[color:var(--color-opinion-soft)]/30 dark:from-[color:var(--color-accent)]/5 dark:to-[color:var(--color-opinion)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+              <div class="relative flex items-center gap-2 text-xs">
+                <span class="px-2 py-0.5 rounded-full bg-[color:var(--color-ink)] dark:bg-[color:var(--color-paper)] text-[color:var(--color-paper)] dark:text-[color:var(--color-ink)] font-medium">
+                  Tanlangan
+                </span>
+                <span class="uppercase tracking-wider text-[color:var(--color-muted)]">
+                  {categoryLabels[featured.data.category]}
+                </span>
+              </div>
+
+              <h3 class="relative mt-6 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight leading-[1.05] group-hover:text-[color:var(--color-accent)] transition-colors">
+                {featured.data.title}
+              </h3>
+
+              <p class="relative mt-4 text-[color:var(--color-muted)] leading-relaxed line-clamp-4 sm:line-clamp-5">
+                {featured.data.summary}
+              </p>
+
+              <div class="relative mt-auto pt-6 flex items-center justify-between gap-3">
+                <RatingBadge rating={featured.data.rating} />
+                <span class="inline-flex items-center gap-1 text-sm font-medium">
+                  To‘liq tahlil
+                  <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1">
+                    <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </span>
+              </div>
+            </a>
+          )}
+
+          <!-- Side stack -->
+          <div class="lg:col-span-2 grid gap-4 content-start">
+            {rest.length === 0 && featured && (
+              <div class="scroll-reveal rounded-3xl border border-dashed border-[color:var(--color-line)] dark:border-stone-800 p-8 text-sm text-[color:var(--color-muted)]" style="--delay:220ms">
+                <p class="font-medium text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)]">Yangi tahlillar yo‘lda</p>
+                <p class="mt-2">Birinchi tahlillarimiz e‘lon qilingach, shu yerda paydo bo‘ladi.</p>
+              </div>
+            )}
+            {rest.map((entry, idx) => {
+              const slug = entry.id.replace(/\.[^.]+$/, '');
+              const date = entry.data.updatedAt ?? entry.data.publishedAt;
+              return (
+                <a
+                  href={`/tahlillar/${slug}`}
+                  class="scroll-reveal group rounded-2xl border border-[color:var(--color-line)] dark:border-stone-800 p-5 hover:border-[color:var(--color-ink)]/30 dark:hover:border-stone-600 transition-all"
+                  style={`--delay:${220 + idx * 80}ms`}
+                >
+                  <div class="flex items-center justify-between gap-2 text-xs text-[color:var(--color-muted)]">
+                    <span class="uppercase tracking-wider">{categoryLabels[entry.data.category]}</span>
+                    <time datetime={date.toISOString()}>
+                      {new Intl.DateTimeFormat('uz-UZ', { month: 'short', day: 'numeric' }).format(date)}
+                    </time>
+                  </div>
+                  <h3 class="mt-2 text-lg font-semibold tracking-tight group-hover:text-[color:var(--color-accent)] transition-colors line-clamp-2">
+                    {entry.data.title}
+                  </h3>
+                  <div class="mt-3">
+                    <RatingBadge rating={entry.data.rating} size="sm" />
+                  </div>
+                </a>
+              );
+            })}
           </div>
-        ) : (
-          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((entry) => (
-              <ProjectCard entry={entry} />
-            ))}
-          </div>
-        )
-      }
+        </div>
+      )}
     </div>
   </section>
+
+  <!-- ════ SECTION 4: AI CTA ════ -->
+  <section class="relative min-h-[calc(100svh-3.5rem)] flex items-center border-t border-[color:var(--color-line)] dark:border-stone-800 overflow-hidden">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+      <div class="cta-glow absolute top-1/2 left-1/2 size-[32rem] rounded-full bg-[color:var(--color-accent-soft)]/40 dark:bg-[color:var(--color-accent)]/8 blur-3xl"></div>
+    </div>
+
+    <div class="mx-auto max-w-[var(--container-wide)] w-full px-4 sm:px-6 py-20 sm:py-24 text-center">
+      <p class="scroll-reveal text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)]">AI uchun manba</p>
+
+      <h2 class="scroll-reveal mt-5 text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.05] max-w-4xl mx-auto" style="--delay:120ms">
+        AI‘ga so‘rang:<br />
+        <span class="inline-flex items-baseline gap-2 sm:gap-3 mt-3">
+          <span aria-hidden="true" class="text-[color:var(--color-muted)]">«</span>
+          <span
+            class="rotate-word relative inline-block min-w-[7ch] sm:min-w-[10ch] text-left text-[color:var(--color-accent)]"
+            data-words='["Bank","Marketplace","Til kursi","Mobil ilova","Provayder","Taksi xizmati"]'
+          >Bank</span>
+          <span>yaxshimi?</span>
+          <span aria-hidden="true" class="text-[color:var(--color-muted)]">»</span>
+        </span>
+      </h2>
+
+      <p class="scroll-reveal mt-8 text-lg sm:text-xl text-[color:var(--color-muted)] max-w-2xl mx-auto leading-relaxed" style="--delay:240ms">
+        Javobda Nisbiy.uz'ni topasiz. Tekshirilgan faktlar, jamoa fikri, manbalar bilan.
+      </p>
+
+      <div class="scroll-reveal mt-10 flex flex-wrap items-center justify-center gap-3" style="--delay:340ms">
+        <a href="/tahlillar" class="inline-flex items-center gap-2 rounded-full bg-[color:var(--color-ink)] dark:bg-[color:var(--color-paper)] text-[color:var(--color-paper)] dark:text-[color:var(--color-ink)] px-6 py-3 text-sm font-medium hover:opacity-90 transition">
+          Tahlillarni ko‘rish
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
+        <a href="/about" class="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-line)] dark:border-stone-700 px-6 py-3 text-sm font-medium hover:bg-[color:var(--color-paper-soft)] dark:hover:bg-stone-900 transition">
+          Biz haqimizda
+        </a>
+      </div>
+
+      <div class="scroll-reveal mt-14 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-[color:var(--color-muted)]" style="--delay:440ms">
+        <a href="/llms.txt" class="hover:underline underline-offset-4">llms.txt</a>
+        <span aria-hidden="true">·</span>
+        <a href="/sitemap-index.xml" class="hover:underline underline-offset-4">Sitemap</a>
+        <span aria-hidden="true">·</span>
+        <a href="/rss.xml" class="hover:underline underline-offset-4">RSS</a>
+        <span aria-hidden="true">·</span>
+        <span>Schema.org Review + FAQPage</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scroll reveal + rotating word -->
+  <script>
+    // Scroll reveal
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in-view');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -10% 0px' }
+    );
+    document.querySelectorAll<HTMLElement>('.scroll-reveal, .draw-line').forEach((el) => io.observe(el));
+
+    // Rotating word in CTA
+    const rotateEl = document.querySelector<HTMLElement>('.rotate-word');
+    if (rotateEl) {
+      const words = JSON.parse(rotateEl.dataset.words || '[]') as string[];
+      let i = 0;
+      setInterval(() => {
+        if (!words.length) return;
+        i = (i + 1) % words.length;
+        rotateEl.classList.add('out');
+        setTimeout(() => {
+          rotateEl.textContent = words[i];
+          rotateEl.classList.remove('out');
+        }, 280);
+      }, 2400);
+    }
+  </script>
 </BaseLayout>

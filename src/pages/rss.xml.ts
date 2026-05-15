@@ -22,7 +22,7 @@ export async function GET(context: APIContext) {
         return {
           title: entry.data.title,
           description: entry.data.summary,
-          link: `/projects/${slug}`,
+          link: `/tahlillar/${slug}`,
           pubDate: entry.data.updatedAt ?? entry.data.publishedAt,
           categories: [entry.data.category, ...entry.data.tags],
         };
