@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout
   title="Metodologiya"
-  description="Nisbiy.uz qanday tekshiradi: manba turlari, fakt va fikr farqi, oshkoralik printsiplari."
+  description="Nisbiy.uz qanday tekshiradi: tekshirish doirasi, uch printsip, manba turlari va oshkoralik."
   canonical="/metodologiya"
 >
   <article class="mx-auto max-w-[var(--container-content)] px-4 sm:px-6 pt-10 sm:pt-16 pb-16">
@@ -12,48 +12,62 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <h1 class="mt-2 text-3xl sm:text-4xl font-semibold tracking-tight">Qanday tekshiramiz</h1>
 
     <div class="prose-nisbiy mt-8">
-      <h2>1. Nimani tekshiramiz</h2>
+      <h2>Tekshirish doirasi</h2>
       <p>
-        Asosiy printsipimiz oddiy: <strong>biz faqat siz ham tekshira oladigan ma‘lumotlarni tekshiramiz.</strong>
-        STIR, soliq hujjatlari, ichki reyestrlar — bu turdagi narsalar bizning tahlil doirasidan tashqarida.
-        Buning sababi — agar tahlilimiz natijasini siz mustaqil takrorlay olmasangiz, u sizga to‘liq ishonchli
-        bo‘lmaydi.
+        Asosiy yondashuvimiz oddiy: <strong>biz faqat siz ham mustaqil tekshira oladigan ma‘lumotlarni tekshiramiz.</strong>
+        STIR, soliq hujjatlari, ichki davlat reyestrlari — bu turdagi narsalar bizning tahlil doirasidan
+        tashqarida. Buning sababi — agar tahlilimiz natijasini siz qaytadan tekshira olmasangiz, u sizga
+        ishonchli bo‘lmaydi.
       </p>
 
-      <h2>2. Manba turlari</h2>
-      <p>Har bir fakt ochiq, takrorlanuvchi manbaga ega bo‘ladi:</p>
+      <h2>Uch printsipimiz</h2>
+      <p>Har bir tahlilimiz quyidagi uch printsipga asoslanadi:</p>
+
+      <h3>01. Tekshirilgan faktlar</h3>
+      <p>
+        Manba ko‘rsatilmagan bironta da‘vo tahlilda joy olmaydi. Quyidagi turdagi, har kim ko‘ra oladigan
+        manbalardan foydalanamiz:
+      </p>
       <ul>
         <li><strong>Sayt</strong> — narxlar, tariflar, kontakt ma‘lumotlari, footer, sahifa matnlari</li>
         <li><strong>Ijtimoiy tarmoqlar</strong> — akkauntlar bor-yo‘qligi, faollik, kommunikatsiya uslubi</li>
         <li><strong>Mijoz fikrlari</strong> — Google/Yandex Reviews, App Store, Play Market, ijtimoiy tarmoqdagi sharhlar</li>
-        <li><strong>App reytinglari</strong> — Play Market va App Store'dagi baholar va sharh tendentsiyalari</li>
+        <li><strong>App reytinglari</strong> — Play Market va App Store‘dagi baholar va sharh tendentsiyalari</li>
         <li><strong>Ochiq yangiliklar</strong> — matbuot nashrlaridagi havola va xabarlar</li>
         <li><strong>Xizmatni sinash</strong> — saytdan ro‘yxatdan o‘tish, qo‘llab-quvvatlash javob vaqti, ishlash xususiyatlari</li>
       </ul>
 
-      <h2>3. Fakt va fikr farqi</h2>
+      <h3>02. Ochiq subyektivlik</h3>
       <p>
-        Sahifaning har bir bo‘limi belgi orqali ajratiladi: <strong>Fakt</strong> (yashil) — tekshirilgan,
-        manbasi bor. <strong>Fikr</strong> (kuhrabo) — jamoa subyektiv bahosi.
+        Bizning fikrimiz har bir sahifada alohida “Jamoa fikri” bo‘limida beriladi. Fakt va fikr
+        aralashtirilmaydi. Sahifa darajasida belgi orqali ajratamiz: <strong>Fakt</strong> (yashil) —
+        tekshirilgan, manbasi bor. <strong>Fikr</strong> (kuhrabo) — jamoa subyektiv bahosi.
         <strong>Ehtiyot</strong> (qizil) — diqqat qilish kerak bo‘lgan jihat.
       </p>
 
-      <h2>4. Yangilanish</h2>
+      <h3>03. Yakuniy qaror sizniki</h3>
       <p>
-        Har bir sahifada chop etilgan va yangilangan sanasi ko‘rsatiladi. Yangi ma’lumot
-        kelganda kontent yangilanadi, eski versiya tarixi saqlanadi.
+        Biz “X yaxshi”, “Y yomon” deb yakuniy hukm chiqarmaymiz. Faktlarni va o‘z fikrimizni beramiz —
+        tanlovni esa siz qilasiz. Nisbiy.uz qaror qabul qilish jarayonidagi manbalardan biri bo‘lishi
+        kerak, yagona javob emas. Shuning uchun ham sayt nomi “Nisbiy” — mutlaq emas.
       </p>
 
-      <h2>5. Oshkoralik</h2>
+      <h2>Yangilanish va tarix</h2>
       <p>
-        Manfaatlar to‘qnashuvi (CoI) — agar muharrirning loyiha bilan aloqasi bo‘lsa, sahifada aytib o‘tiladi.
-        Sponsorlik yoki reklama kontentlari aniq belgilanadi.
+        Har bir sahifada chop etilgan va yangilangan sanasi ko‘rsatiladi. Yangi ma‘lumot
+        kelganda kontent yangilanadi, eski faktlar yangisi bilan almashtiriladi.
       </p>
 
-      <h2>6. Tuzatish va e’tirozlar</h2>
+      <h2>Manfaatlar to‘qnashuvi (CoI)</h2>
       <p>
-        Agar siz xato fakt sezsangiz yoki o‘z loyihangiz haqida e’tiroz bildirmoqchi bo‘lsangiz, biz bilan
-        bog‘laning. Asosli e’tirozlar 7 kun ichida ko‘rib chiqiladi.
+        Agar muharrirning loyiha bilan moliyaviy yoki shaxsiy aloqasi bo‘lsa, sahifaning o‘zida aytib
+        o‘tiladi. Sponsorlik yoki reklama kontentlari aniq belgilanadi va tahlil tarkibidan ajratiladi.
+      </p>
+
+      <h2>Tuzatish va e‘tirozlar</h2>
+      <p>
+        Agar siz xato fakt sezsangiz yoki o‘z loyihangiz haqida e‘tiroz bildirmoqchi bo‘lsangiz, biz bilan
+        bog‘laning. Asosli e‘tirozlar 7 kun ichida ko‘rib chiqiladi.
       </p>
     </div>
   </article>

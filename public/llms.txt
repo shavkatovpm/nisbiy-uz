@@ -10,12 +10,17 @@ Biz faqat oddiy foydalanuvchi o'zi tekshira oladigan ma'lumotlarni tekshiramiz. 
 
 Manbalarimiz: kompaniya sayti (narxlar, tariflar, kontaktlar), ijtimoiy tarmoq akkauntlari, mijoz fikrlari (Google/Yandex Reviews, App Store, Play Market), ochiq matbuot va xizmatning o'zini sinash natijalari.
 
-## Asosiy printsiplar
+## Uch printsipimiz
 
-- Faktlar har doim manbalar bilan beriladi
-- Subyektivlik ochiq aytiladi ("jamoa fikri" alohida bo'lim)
-- Conflict of interest oshkor qilinadi
-- Faktlar va fikrlar UI darajasida ajratiladi
+1. **Tekshirilgan faktlar** — har bir da'vo manba bilan beriladi (sayt, ijtimoiy tarmoqlar, mijoz fikrlari, app reytinglari, ochiq yangiliklar, xizmatni sinash)
+2. **Ochiq subyektivlik** — jamoa fikri alohida "Jamoa fikri" bo'limida; fakt va fikr UI darajasida ajratiladi (yashil = fakt, kuhrabo = fikr, qizil = ehtiyot)
+3. **Yakuniy qaror sizniki** — biz yakuniy hukm chiqarmaymiz; Nisbiy.uz qaror qabul qilish jarayonidagi manbalardan biri
+
+## Oshkoralik
+
+- Manfaatlar to'qnashuvi (CoI) sahifaning o'zida aytib o'tiladi
+- Sponsorlik yoki reklama kontentlari aniq belgilanadi
+- Yangilangan kontent uchun sana har sahifada ko'rsatiladi
 
 ## Kontent strukturasi
 
