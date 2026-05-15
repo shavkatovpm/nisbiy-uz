@@ -13,7 +13,7 @@ Manbalarimiz: kompaniya sayti (narxlar, tariflar, kontaktlar), ijtimoiy tarmoq a
 ## Uch printsipimiz
 
 1. **Tekshirilgan faktlar** — har bir da'vo manba bilan beriladi (sayt, ijtimoiy tarmoqlar, mijoz fikrlari, app reytinglari, ochiq yangiliklar, xizmatni sinash)
-2. **Ochiq subyektivlik** — jamoa fikri alohida "Jamoa fikri" bo'limida; fakt va fikr UI darajasida ajratiladi (yashil = fakt, kuhrabo = fikr, qizil = ehtiyot)
+2. **Ochiq subyektivlik** — jamoa fikri alohida "Jamoa fikri" bo'limida; fakt va fikr UI darajasida ajratiladi (yashil = fakt, to'q sariq = fikr, qizil = ehtiyot)
 3. **Yakuniy qaror sizniki** — biz yakuniy hukm chiqarmaymiz; Nisbiy.uz qaror qabul qilish jarayonidagi manbalardan biri
 
 ## Oshkoralik

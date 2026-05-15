@@ -1,6 +1,7 @@
 ---
-import { categoryLabels, ratingLabels } from '../lib/site';
+import { categoryLabels } from '../lib/site';
 import RatingBadge from './RatingBadge.astro';
+import { resolveRating, type Criteria, type RatingBucket } from '../lib/rating';
 
 interface Props {
   entry: {
@@ -9,7 +10,8 @@ interface Props {
       title: string;
       summary: string;
       category: keyof typeof categoryLabels;
-      rating: keyof typeof ratingLabels;
+      criteria?: Criteria;
+      rating?: RatingBucket;
       updatedAt?: Date;
       publishedAt: Date;
     };
@@ -17,9 +19,10 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { title, summary, category, rating, publishedAt, updatedAt } = entry.data;
+const { title, summary, category, criteria, rating: manual, publishedAt, updatedAt } = entry.data;
 const slug = entry.id.replace(/\.[^.]+$/, '');
 const date = updatedAt ?? publishedAt;
+const { bucket: rating, score } = resolveRating({ criteria, manual });
 ---
 
 <article class="group">
@@ -39,7 +42,7 @@ const date = updatedAt ?? publishedAt;
     </h3>
     <p class="mt-2 text-sm text-[color:var(--color-muted)] line-clamp-3 leading-relaxed">{summary}</p>
     <div class="mt-4">
-      <RatingBadge rating={rating} size="sm" />
+      <RatingBadge rating={rating} score={score} size="sm" />
     </div>
   </a>
 </article>

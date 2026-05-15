@@ -72,54 +72,31 @@
 }
 
 @layer utilities {
-  @keyframes hero-glow-wander {
-    0% {
-      transform: translate(-90%, -80%) scale(1);
-      opacity: 0.14;
-    }
-    20% {
-      transform: translate(20%, -110%) scale(1.1);
-      opacity: 0.19;
-    }
-    40% {
-      transform: translate(60%, 10%) scale(0.95);
-      opacity: 0.15;
-    }
-    60% {
-      transform: translate(-20%, 60%) scale(1.15);
-      opacity: 0.19;
-    }
-    80% {
-      transform: translate(-110%, 20%) scale(1);
-      opacity: 0.14;
-    }
-    100% {
-      transform: translate(-90%, -80%) scale(1);
-      opacity: 0.14;
-    }
+  /* ─── Hero tour: the glow circle visits each spotlight word ─── */
+  @property --spot-x {
+    syntax: '<percentage>';
+    initial-value: 72%;
+    inherits: true;
+  }
+  @property --spot-y {
+    syntax: '<percentage>';
+    initial-value: 22%;
+    inherits: true;
   }
 
-  @keyframes hero-glow-wander-alt {
-    0% {
-      transform: translate(40%, -40%) scale(1);
-      opacity: 0.06;
-    }
-    25% {
-      transform: translate(-80%, 30%) scale(1.2);
-      opacity: 0.11;
-    }
-    50% {
-      transform: translate(50%, 80%) scale(0.9);
-      opacity: 0.08;
-    }
-    75% {
-      transform: translate(80%, -60%) scale(1.1);
-      opacity: 0.11;
-    }
-    100% {
-      transform: translate(40%, -40%) scale(1);
-      opacity: 0.06;
-    }
+  @keyframes hero-tour {
+    /* Faktlar */
+    0%,  12% { --spot-x: 72%; --spot-y: 22%; }
+    /* Fikrlar */
+    20%, 32% { --spot-x: 80%; --spot-y: 52%; }
+    /* Manbalar */
+    40%, 52% { --spot-x: 68%; --spot-y: 80%; }
+    /* Mezonlar */
+    60%, 72% { --spot-x: 34%; --spot-y: 82%; }
+    /* Tekshiruv */
+    80%, 92% { --spot-x: 14%; --spot-y: 76%; }
+    /* loop back to Faktlar */
+    100%     { --spot-x: 72%; --spot-y: 22%; }
   }
 
   @keyframes hero-reveal-in {
@@ -140,13 +117,55 @@
     50% { transform: translate(-50%, 6px); opacity: 1; }
   }
 
-  .hero-glow {
-    animation: hero-glow-wander 22s ease-in-out infinite;
-    will-change: transform, opacity;
+  /* The section drives the tour; children read --spot-x/--spot-y from it */
+  .hero-section {
+    animation: hero-tour 28s ease-in-out infinite;
   }
+
+  /* Soft-fade the glow halo at the bottom so it doesn't clip in a hard straight line
+     against the hero/printsiplar boundary */
+  .hero-bg {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 80px), transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 80px), transparent 100%);
+  }
+
+  .hero-glow,
   .hero-glow-soft {
-    animation: hero-glow-wander-alt 17s ease-in-out infinite;
-    will-change: transform, opacity;
+    top: var(--spot-y);
+    left: var(--spot-x);
+    will-change: top, left;
+  }
+
+  .hero-spotlight {
+    -webkit-mask-image: radial-gradient(
+      circle 10rem at var(--spot-x) var(--spot-y),
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.85) 30%,
+      rgba(0, 0, 0, 0.35) 65%,
+      transparent 95%
+    );
+            mask-image: radial-gradient(
+      circle 10rem at var(--spot-x) var(--spot-y),
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.85) 30%,
+      rgba(0, 0, 0, 0.35) 65%,
+      transparent 95%
+    );
+  }
+
+  .spot-word {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-sans);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.5px #fff;
+            text-stroke: 1.5px #fff;
+    opacity: 0.5;
+    white-space: nowrap;
+    user-select: none;
   }
 
   .hero-reveal {
@@ -212,6 +231,70 @@
     will-change: transform, opacity;
   }
 
+  /* AI cursor blink (chat mockup) */
+  @keyframes ai-cursor-blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+  .ai-cursor {
+    animation: ai-cursor-blink 1s steps(1) infinite;
+  }
+
+  /* Lens cards (Nisbiy demo section) */
+  .lens-card {
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.3s ease,
+      box-shadow 0.4s ease;
+  }
+  .lens-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.08);
+  }
+  .lens-accent {
+    transform: scaleX(0.2);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s, opacity 0.4s ease;
+    opacity: 0.6;
+  }
+  .scroll-reveal.in-view .lens-accent,
+  .lens-card.scroll-reveal.in-view .lens-accent {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  .lens-card:hover .lens-accent {
+    height: 4px;
+  }
+
+  /* Sea-wave divider between hero and printsiplar — two layered, drifting lines */
+  .wave-divider {
+    height: 40px;
+    color: var(--color-line);
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .wave-divider svg {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 200%;
+    height: 100%;
+  }
+  .wave-divider .wave-back {
+    opacity: 0.55;
+    animation: wave-drift 18s linear infinite;
+  }
+  .wave-divider .wave-front {
+    animation: wave-drift 11s linear infinite reverse;
+  }
+  @keyframes wave-drift {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @media (prefers-color-scheme: dark) {
+    .wave-divider {
+      color: #292524;
+    }
+  }
+
   /* Subtle grid pattern background */
   .grid-pattern {
     background-image:
@@ -224,11 +307,17 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-glow,
-    .hero-glow-soft,
+    .hero-section,
     .hero-scroll,
-    .cta-glow {
+    .cta-glow,
+    .wave-divider .wave-back,
+    .wave-divider .wave-front {
       animation: none;
+    }
+    .hero-spotlight {
+      -webkit-mask-image: none;
+              mask-image: none;
+      opacity: 0.18;
     }
     .hero-reveal,
     .scroll-reveal,

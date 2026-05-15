@@ -3,23 +3,40 @@ import { ratingLabels } from '../lib/site';
 
 interface Props {
   rating: keyof typeof ratingLabels;
+  score?: number | null;
   size?: 'sm' | 'md';
 }
 
-const { rating, size = 'md' } = Astro.props;
+const { rating, score = null, size = 'md' } = Astro.props;
 const meta = ratingLabels[rating];
 
 const toneClasses: Record<string, string> = {
   fact: 'bg-[color:var(--color-fact-soft)] text-[color:var(--color-fact)]',
   opinion: 'bg-[color:var(--color-opinion-soft)] text-[color:var(--color-opinion)]',
   warn: 'bg-[color:var(--color-warn-soft)] text-[color:var(--color-warn)]',
-  muted: 'bg-[color:var(--color-paper-soft)] text-[color:var(--color-muted)] dark:bg-stone-800 dark:text-stone-400',
+  muted:
+    'bg-[color:var(--color-paper-soft)] text-[color:var(--color-muted)] dark:bg-stone-800 dark:text-stone-400',
 };
 
 const sizeClasses = size === 'sm' ? 'text-[11px] px-2 py-0.5' : 'text-xs px-2.5 py-1';
+const showScore = typeof score === 'number';
 ---
 
-<span class:list={['inline-flex items-center gap-1 rounded-full font-medium', sizeClasses, toneClasses[meta.tone]]}>
+<span
+  class:list={[
+    'inline-flex items-center gap-1.5 rounded-full font-medium',
+    sizeClasses,
+    toneClasses[meta.tone],
+  ]}
+>
   <span aria-hidden="true" class="size-1.5 rounded-full bg-current opacity-70"></span>
-  {meta.label}
+  <span>{meta.label}</span>
+  {
+    showScore && (
+      <>
+        <span aria-hidden="true" class="opacity-50">·</span>
+        <span class="font-mono tabular-nums">{score}/100</span>
+      </>
+    )
+  }
 </span>

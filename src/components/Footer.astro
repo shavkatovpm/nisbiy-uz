@@ -6,7 +6,7 @@ const year = new Date().getFullYear();
 
 <footer class="mt-24 border-t border-[color:var(--color-line)] dark:border-stone-800">
   <div class="mx-auto max-w-[var(--container-wide)] px-4 sm:px-6 py-10 text-sm text-[color:var(--color-muted)]">
-    <div class="grid gap-8 sm:grid-cols-3">
+    <div class="grid gap-8 sm:grid-cols-2">
       <div>
         <Logo size={20} textClass="text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)]" />
         <p class="mt-3 max-w-xs leading-relaxed">{site.tagline}</p>
@@ -15,21 +15,13 @@ const year = new Date().getFullYear();
         <div class="font-semibold text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)]">Saytda</div>
         <ul class="mt-2 space-y-1">
           <li><a href="/tahlillar" class="hover:underline underline-offset-4">Barcha tahlillar</a></li>
-          <li><a href="/metodologiya" class="hover:underline underline-offset-4">Metodologiya</a></li>
-          <li><a href="/about" class="hover:underline underline-offset-4">Biz haqimizda</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="font-semibold text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)]">AI uchun</div>
-        <ul class="mt-2 space-y-1">
-          <li><a href="/llms.txt" class="hover:underline underline-offset-4">llms.txt</a></li>
-          <li><a href="/sitemap-index.xml" class="hover:underline underline-offset-4">Sitemap</a></li>
-          <li><a href="/rss.xml" class="hover:underline underline-offset-4">RSS</a></li>
+          <li><a href="/metodologiya" class="hover:underline underline-offset-4">Metod</a></li>
+          <li><a href="/about" class="hover:underline underline-offset-4">Haqimizda</a></li>
         </ul>
       </div>
     </div>
     <div class="mt-10 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-      <p>© {year} {site.name}. Faktlar va fikrlar — ochiq.</p>
+      <p>© {year}</p>
       <p class="text-xs">Yakuniy qaror sizniki.</p>
     </div>
   </div>

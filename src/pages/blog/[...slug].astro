@@ -1,0 +1,170 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FaqList from '../../components/FaqList.astro';
+import CtaCard from '../../components/CtaCard.astro';
+import { blogCategoryLabels, site } from '../../lib/site';
+import { breadcrumbJsonLd } from '../../lib/schema';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((p) => ({
+    params: { slug: p.id.replace(/\.[^.]+$/, '') },
+    props: { entry: p },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const data = entry.data;
+const slug = entry.id.replace(/\.[^.]+$/, '');
+const canonical = `/blog/${slug}`;
+const fullUrl = new URL(canonical, site.url).href;
+
+const focusQuestion = data.focusQuestion ?? data.title;
+const pageTitle = `${focusQuestion} ${data.title !== focusQuestion ? `— ${data.title}` : ''}`.trim();
+
+const articleSchema: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: focusQuestion,
+  name: data.title,
+  description: data.summary,
+  url: fullUrl,
+  inLanguage: 'uz-UZ',
+  datePublished: data.publishedAt.toISOString(),
+  dateModified: (data.updatedAt ?? data.publishedAt).toISOString(),
+  author: { '@type': 'Organization', name: site.name, url: site.url },
+  publisher: site.publisher,
+};
+
+const faqSchema = data.faq.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: data.faq.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    }
+  : null;
+
+const jsonLd: Record<string, unknown>[] = [
+  articleSchema,
+  ...(faqSchema ? [faqSchema] : []),
+  breadcrumbJsonLd([
+    { name: 'Asosiy', url: site.url },
+    { name: 'Blog', url: new URL('/blog', site.url).href },
+    { name: data.title, url: fullUrl },
+  ]),
+];
+
+const fmt = (d: Date) =>
+  new Intl.DateTimeFormat('uz-UZ', { year: 'numeric', month: 'long', day: 'numeric' }).format(d);
+
+const dateToShow = data.updatedAt ?? data.publishedAt;
+const dateLabel = data.updatedAt ? 'Yangilangan' : 'Chop etilgan';
+
+const hasSensitiveCtas = data.ctas.some((c) => c.type === 'own' || c.type === 'sponsored');
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={data.summary}
+  image={data.ogImage ?? data.coverImage}
+  type="article"
+  publishedAt={data.publishedAt}
+  updatedAt={data.updatedAt}
+  canonical={canonical}
+  jsonLd={jsonLd}
+>
+  <article class="mx-auto max-w-[var(--container-content)] px-4 sm:px-6 pt-10 sm:pt-16 pb-16">
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" class="text-xs text-[color:var(--color-muted)]">
+      <ol class="flex items-center gap-1.5">
+        <li><a href="/" class="hover:underline underline-offset-4">Asosiy</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/blog" class="hover:underline underline-offset-4">Blog</a></li>
+        <li aria-hidden="true">/</li>
+        <li class="truncate text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)]">{data.title}</li>
+      </ol>
+    </nav>
+
+    <!-- Header -->
+    <header class="mt-6">
+      <div class="flex flex-wrap items-center gap-2 text-xs">
+        <span class="uppercase tracking-wider text-[color:var(--color-muted)]">
+          {blogCategoryLabels[data.category]}
+        </span>
+        <span aria-hidden="true" class="text-[color:var(--color-muted)]">·</span>
+        <time datetime={dateToShow.toISOString()} class="text-[color:var(--color-muted)]">
+          {dateLabel}: {fmt(dateToShow)}
+        </time>
+      </div>
+      <h1 class="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight leading-tight text-balance">
+        {focusQuestion}
+      </h1>
+      {focusQuestion !== data.title && (
+        <p class="mt-3 text-sm uppercase tracking-wider text-[color:var(--color-muted)]">
+          {data.title}
+        </p>
+      )}
+      <p class="mt-5 text-lg text-[color:var(--color-muted)] leading-relaxed text-balance">
+        {data.summary}
+      </p>
+
+      {hasSensitiveCtas && (
+        <aside class="mt-6 rounded-xl border border-dashed border-[color:var(--color-opinion)]/40 bg-[color:var(--color-opinion-soft)]/30 p-3 text-xs text-[color:var(--color-opinion)]">
+          <strong class="font-semibold">Oshkor qilish:</strong> Bu maqolada Nisbiy.uz jamoasining o'z loyihalari yoki hamkor loyihalar haqida havola bor — har biri o'z yorlig'i bilan belgilangan.
+        </aside>
+      )}
+    </header>
+
+    <!-- Body content -->
+    <section class="prose-nisbiy mt-10">
+      <Content />
+    </section>
+
+    <!-- CTAs (after body) -->
+    {data.ctas.length > 0 && (
+      <section class="mt-10">
+        <h2 class="text-xl font-semibold tracking-tight">Tegishli linklar</h2>
+        <div class="mt-4 space-y-3">
+          {data.ctas.map((cta) => (
+            <CtaCard
+              label={cta.label}
+              url={cta.url}
+              description={cta.description}
+              type={cta.type}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- FAQ -->
+    {data.faq.length > 0 && (
+      <section id="faq" class="mt-12 scroll-mt-20">
+        <h2 class="text-xl font-semibold tracking-tight">Tez-tez so‘raladigan savollar</h2>
+        <div class="mt-4">
+          <FaqList faq={data.faq} />
+        </div>
+      </section>
+    )}
+
+    <!-- Disclosure -->
+    {data.disclosure && (
+      <aside class="mt-12 rounded-xl border border-dashed border-[color:var(--color-line)] dark:border-stone-800 p-4 text-xs text-[color:var(--color-muted)]">
+        <strong class="font-semibold text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)]">Oshkor qilish:</strong>{' '}
+        {data.disclosure}
+      </aside>
+    )}
+
+    <!-- Footer -->
+    <footer class="mt-12 border-t border-[color:var(--color-line)] dark:border-stone-800 pt-6 flex flex-wrap items-center justify-between gap-3 text-xs text-[color:var(--color-muted)]">
+      <a href="/blog" class="hover:underline underline-offset-4">← Barcha maqolalar</a>
+      <span>Manba sifatida sitatalashda: <code class="font-mono">{fullUrl}</code></span>
+    </footer>
+  </article>
+</BaseLayout>
