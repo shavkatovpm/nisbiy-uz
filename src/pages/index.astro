@@ -16,13 +16,13 @@ const featuredSlug = featured?.id.replace(/\.[^.]+$/, '');
 
 <BaseLayout title={site.name} description={site.description} canonical="/">
   <!-- ════ SECTION 1: HERO ════ -->
-  <section class="relative overflow-hidden min-h-[calc(100svh-3.5rem)] flex items-center">
+  <section class="relative overflow-hidden">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
       <div class="hero-glow absolute top-1/2 left-1/2 size-[22rem] sm:size-[26rem] rounded-full bg-[color:var(--color-accent-soft)] blur-3xl"></div>
       <div class="hero-glow-soft absolute top-1/2 left-1/2 size-[14rem] rounded-full bg-[color:var(--color-accent)]/20 blur-2xl"></div>
     </div>
 
-    <div class="mx-auto max-w-[var(--container-wide)] w-full px-4 sm:px-6 py-12">
+    <div class="mx-auto max-w-[var(--container-wide)] w-full px-4 sm:px-6 pt-20 pb-32 sm:pt-32 sm:pb-40 lg:pt-40 lg:pb-48">
       <p class="hero-reveal text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)]" style="--delay:0ms">Nisbiy — mutlaq emas</p>
       <h1 class="hero-reveal mt-4 text-4xl sm:text-6xl font-semibold tracking-tight leading-[1.05] max-w-3xl" style="--delay:80ms">
         Tekshirilgan faktlar. <br class="hidden sm:block" />
@@ -44,7 +44,7 @@ const featuredSlug = featured?.id.replace(/\.[^.]+$/, '');
       </div>
     </div>
 
-    <a href="#printsiplar" aria-label="Pastga aylantirish" class="hero-scroll absolute bottom-6 left-1/2 inline-flex flex-col items-center gap-1 text-[color:var(--color-muted)] hover:text-[color:var(--color-ink)] dark:hover:text-[color:var(--color-paper)] transition-colors">
+    <a href="#printsiplar" aria-label="Pastga aylantirish" class="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 inline-flex flex-col items-center gap-1 text-[color:var(--color-muted)] hover:text-[color:var(--color-ink)] dark:hover:text-[color:var(--color-paper)] transition-colors">
       <span class="text-[10px] uppercase tracking-wider">Davom etish</span>
       <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="6 9 12 15 18 9" />
@@ -55,11 +55,11 @@ const featuredSlug = featured?.id.replace(/\.[^.]+$/, '');
   <!-- ════ SECTION 2: PRINTSIPLAR ════ -->
   <section
     id="printsiplar"
-    class="relative min-h-[calc(100svh-3.5rem)] flex items-center border-t border-[color:var(--color-line)] dark:border-stone-800 overflow-hidden scroll-mt-14"
+    class="relative border-t border-[color:var(--color-line)] dark:border-stone-800 overflow-hidden scroll-mt-14"
   >
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 grid-pattern opacity-[0.35] dark:opacity-[0.18]"></div>
 
-    <div class="mx-auto max-w-[var(--container-wide)] w-full px-4 sm:px-6 py-20 sm:py-24">
+    <div class="mx-auto max-w-[var(--container-wide)] w-full px-4 sm:px-6 py-24 sm:py-32 lg:py-40">
       <div class="grid gap-10 lg:gap-16 lg:grid-cols-[1fr_1.4fr] lg:items-start">
         <!-- Left: section intro -->
         <div class="lg:sticky lg:top-24 scroll-reveal" style="--delay:0ms">
@@ -136,11 +136,11 @@ const featuredSlug = featured?.id.replace(/\.[^.]+$/, '');
   </section>
 
   <!-- ════ SECTION 3: SO'NGGI TAHLILLAR (magazine-style) ════ -->
-  <section class="relative min-h-[calc(100svh-3.5rem)] flex flex-col justify-center border-t border-[color:var(--color-line)] dark:border-stone-800 overflow-hidden">
+  <section class="relative border-t border-[color:var(--color-line)] dark:border-stone-800 overflow-hidden">
     <!-- diagonal background accent -->
     <div aria-hidden="true" class="pointer-events-none absolute -top-32 -right-32 size-[28rem] rounded-full bg-[color:var(--color-opinion-soft)]/30 dark:bg-[color:var(--color-opinion)]/10 blur-3xl"></div>
 
-    <div class="mx-auto max-w-[var(--container-wide)] w-full px-4 sm:px-6 py-20 sm:py-24">
+    <div class="mx-auto max-w-[var(--container-wide)] w-full px-4 sm:px-6 py-24 sm:py-32 lg:py-40">
       <!-- Header -->
       <div class="scroll-reveal flex items-end justify-between gap-4 flex-wrap">
         <div>
@@ -248,12 +248,12 @@ const featuredSlug = featured?.id.replace(/\.[^.]+$/, '');
   </section>
 
   <!-- ════ SECTION 4: AI CTA ════ -->
-  <section class="relative min-h-[calc(100svh-3.5rem)] flex items-center border-t border-[color:var(--color-line)] dark:border-stone-800 overflow-hidden">
+  <section class="relative border-t border-[color:var(--color-line)] dark:border-stone-800 overflow-hidden">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
       <div class="cta-glow absolute top-1/2 left-1/2 size-[32rem] rounded-full bg-[color:var(--color-accent-soft)]/40 dark:bg-[color:var(--color-accent)]/8 blur-3xl"></div>
     </div>
 
-    <div class="mx-auto max-w-[var(--container-wide)] w-full px-4 sm:px-6 py-20 sm:py-24 text-center">
+    <div class="mx-auto max-w-[var(--container-wide)] w-full px-4 sm:px-6 py-24 sm:py-32 lg:py-40 text-center">
       <p class="scroll-reveal text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)]">AI uchun manba</p>
 
       <h2 class="scroll-reveal mt-5 text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.05] max-w-4xl mx-auto" style="--delay:120ms">
