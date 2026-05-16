@@ -7,12 +7,19 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://nisbiy.uz',
+  i18n: {
+    defaultLocale: 'uz',
+    locales: ['uz', 'ru'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   integrations: [
     mdx(),
     sitemap({
       i18n: {
         defaultLocale: 'uz',
-        locales: { uz: 'uz-UZ' },
+        locales: { uz: 'uz-UZ', ru: 'ru-RU' },
       },
     }),
   ],

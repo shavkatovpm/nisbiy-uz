@@ -1,10 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import ProjectCard from '../../components/ProjectCard.astro';
-import { categoryLabels } from '../../lib/site';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ProjectCard from '../../../components/ProjectCard.astro';
+import { categoryLabelsRu } from '../../../lib/site';
 
-const projects = (await getCollection('projects', ({ data }) => !data.draft && data.lang === 'uz')).sort(
+const projects = (await getCollection('projects', ({ data }) => !data.draft && data.lang === 'ru')).sort(
   (a, b) => (b.data.updatedAt ?? b.data.publishedAt).valueOf() - (a.data.updatedAt ?? a.data.publishedAt).valueOf()
 );
 
@@ -12,16 +12,17 @@ const cats = Array.from(new Set(projects.map((p) => p.data.category)));
 ---
 
 <BaseLayout
-  title="Barcha tahlillar"
-  description="O'zbekistondagi loyihalar, kompaniyalar va xizmatlar haqida foydalanuvchi nuqtai nazaridan tekshirilgan tahlillar."
-  canonical="/tahlillar"
+  title="Все обзоры"
+  description="Проверенные с точки зрения пользователя обзоры о проектах, компаниях и сервисах Узбекистана."
+  canonical="/ru/tahlillar"
+  lang="ru"
 >
   <section class="mx-auto max-w-[var(--container-wide)] px-4 sm:px-6 pt-10 sm:pt-16">
     <header class="max-w-2xl">
-      <p class="text-xs uppercase tracking-wider text-[color:var(--color-muted)]">Katalog</p>
-      <h1 class="mt-2 text-3xl sm:text-4xl font-semibold tracking-tight">Barcha tahlillar</h1>
+      <p class="text-xs uppercase tracking-wider text-[color:var(--color-muted)]">Каталог</p>
+      <h1 class="mt-2 text-3xl sm:text-4xl font-semibold tracking-tight">Все обзоры</h1>
       <p class="mt-3 text-[color:var(--color-muted)]">
-        Har bir loyiha haqida tekshirilgan faktlar va jamoa fikri. Manbalar har doim ko‘rsatiladi.
+        По каждому проекту — проверенные факты и мнение команды. Источники всегда указаны.
       </p>
     </header>
 
@@ -29,17 +30,17 @@ const cats = Array.from(new Set(projects.map((p) => p.data.category)));
       cats.length > 0 && (
         <div class="mt-6 flex flex-wrap gap-2">
           <a
-            href="/tahlillar"
+            href="/ru/tahlillar"
             class="rounded-full border border-[color:var(--color-ink)] dark:border-[color:var(--color-paper)] bg-[color:var(--color-ink)] dark:bg-[color:var(--color-paper)] text-[color:var(--color-paper)] dark:text-[color:var(--color-ink)] px-3 py-1 text-xs"
           >
-            Hammasi · {projects.length}
+            Все · {projects.length}
           </a>
           {cats.map((c) => (
             <a
-              href={`/tahlillar?category=${c}`}
+              href={`/ru/tahlillar?category=${c}`}
               class="rounded-full border border-[color:var(--color-line)] dark:border-stone-800 px-3 py-1 text-xs text-[color:var(--color-muted)] hover:text-[color:var(--color-ink)] dark:hover:text-[color:var(--color-paper)] hover:border-[color:var(--color-ink)]/30"
             >
-              {categoryLabels[c]}
+              {categoryLabelsRu[c]}
             </a>
           ))}
         </div>
@@ -51,12 +52,12 @@ const cats = Array.from(new Set(projects.map((p) => p.data.category)));
     {
       projects.length === 0 ? (
         <div class="rounded-2xl border border-dashed border-[color:var(--color-line)] dark:border-stone-800 p-10 text-center text-[color:var(--color-muted)]">
-          <p>Hozircha kontent yo‘q. Tez orada birinchi tahlillar paydo bo‘ladi.</p>
+          <p>Пока обзоров нет. Скоро появятся первые материалы.</p>
         </div>
       ) : (
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((entry) => (
-            <ProjectCard entry={entry} />
+            <ProjectCard entry={entry} lang="ru" />
           ))}
         </div>
       )

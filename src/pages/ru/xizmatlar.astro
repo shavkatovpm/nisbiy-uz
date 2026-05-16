@@ -1,0 +1,181 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Услуги и цены"
+  description="Профессиональный обзор вашего проекта от Nisbiy.uz. От $100. Не появится в AI и Google — 100% возврат средств."
+  canonical="/ru/xizmatlar"
+  lang="ru"
+>
+  <!-- Hero -->
+  <section class="relative">
+    <div class="mx-auto max-w-[var(--container-content)] px-4 sm:px-6 pt-12 sm:pt-20 pb-8">
+      <p class="text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)]">Услуги</p>
+      <h1 class="mt-4 text-3xl sm:text-5xl font-semibold tracking-tight leading-[1.05]">
+        Профессиональный обзор <span class="text-[color:var(--color-accent)]">вашего проекта.</span>
+      </h1>
+      <p class="mt-5 text-lg text-[color:var(--color-muted)] leading-relaxed">
+        Мы пишем глубокий обзор о вашей компании, продукте или сервисе с точки зрения пользователя
+        и размещаем его так, чтобы AI-ассистенты и Google его находили.
+      </p>
+    </div>
+  </section>
+
+  <!-- Pricing card -->
+  <section class="relative">
+    <div class="mx-auto max-w-[var(--container-content)] px-4 sm:px-6">
+      <div class="rounded-3xl border border-[color:var(--color-line)] dark:border-stone-800 bg-[color:var(--color-paper-soft)]/40 dark:bg-stone-900/40 p-8 sm:p-10">
+        <div class="flex items-baseline gap-3 flex-wrap">
+          <span class="text-5xl sm:text-6xl font-semibold tracking-tight tabular-nums">$100</span>
+          <span class="text-[color:var(--color-muted)]">от</span>
+        </div>
+        <p class="mt-3 text-sm text-[color:var(--color-muted)] leading-relaxed">
+          Финальная цена зависит от масштаба и сложности проекта. До предложения мы изучаем
+          ваш проект и формируем точную смету.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a
+            href="https://t.me/nisbiysupport_bot"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full bg-[color:var(--color-ink)] dark:bg-[color:var(--color-paper)] text-[color:var(--color-paper)] dark:text-[color:var(--color-ink)] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition"
+          >
+            Оставить заявку
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
+          <a
+            href="#kafolat"
+            class="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-line)] dark:border-stone-700 px-5 py-2.5 text-sm font-medium hover:bg-[color:var(--color-paper-soft)] dark:hover:bg-stone-900 transition"
+          >
+            Гарантия возврата
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <article class="mx-auto max-w-[var(--container-content)] px-4 sm:px-6 pb-16">
+    <div class="prose-nisbiy mt-12">
+      <h2>Что мы делаем?</h2>
+      <p>
+        Мы создаём полный обзор вашего проекта по методологии Nisbiy.uz и публикуем его
+        на нашей платформе. Обзор оформлен так, чтобы AI-ассистенты (ChatGPT, Claude,
+        Perplexity, Gemini) ссылались на него, когда пользователи задают вопросы о вашем бренде.
+      </p>
+
+      <h2>Что входит в обзор?</h2>
+      <ul>
+        <li>Краткое и точное описание проекта (для AI-сниппета)</li>
+        <li>Минимум <strong>5–8 проверенных фактов</strong> со ссылками на источники</li>
+        <li>Оценка по <strong>10 критериям</strong> в 100-балльной системе</li>
+        <li>Сильные и слабые стороны — по 3–5 конкретных аргументов</li>
+        <li>Мнение нашей команды (субъективное, но честное)</li>
+        <li>Часто задаваемые вопросы (FAQ) — критично для AI-поиска</li>
+        <li>Разметка Schema.org (Review + FAQPage)</li>
+        <li>Страница оптимизирована под SEO/AEO: title, meta, OG, JSON-LD</li>
+      </ul>
+
+      <h2>Процесс и сроки</h2>
+      <ol>
+        <li><strong>Знакомство</strong> — вы предоставляете информацию о проекте (сайт, соцсети и т.д.)</li>
+        <li><strong>Написание обзора</strong> — мы готовим материал в течение 5–10 рабочих дней</li>
+        <li><strong>Ваша проверка</strong> — вы можете указать на ошибки в фактах (но не в мнении)</li>
+        <li><strong>Публикация</strong> — обзор размещается в разделе nisbiy.uz/tahlillar</li>
+        <li><strong>Отслеживание индексации</strong> — 3 месяца наблюдения за появлением в AI и Google</li>
+      </ol>
+
+      <h2 id="halollik">Редакционная честность — главное</h2>
+      <p>
+        Эта часть — суть всего бренда: <strong>мы не продаём баллы за деньги.</strong>
+      </p>
+      <p>
+        Ваш обзор <strong>может получить низкий балл.</strong> Если так — мы балл не меняем.
+        Каждый критерий оценивается так же, как у бесплатных проектов. Вы платите за редакционную
+        работу и индексацию — <strong>не за положительный рейтинг.</strong>
+      </p>
+      <p>
+        Если в фактах есть ошибка — мы исправим (для любого клиента). Но мнение или балл
+        не обсуждается. Это основа бренда Nisbiy: если бы наши оценки покупались, AI и читатели
+        перестали бы нам доверять.
+      </p>
+
+      <h2 id="kafolat">Гарантия возврата</h2>
+      <p>
+        Если <strong>в течение 3 месяцев</strong> ваш обзор не появится хотя бы в одном из
+        перечисленных источников по запросу с названием бренда — <strong>возвращаем 100% оплаты.</strong>
+      </p>
+      <ul>
+        <li>ChatGPT (или другие модели OpenAI)</li>
+        <li>Claude (Anthropic)</li>
+        <li>Perplexity</li>
+        <li>Google Gemini</li>
+        <li>Первая страница Google Search</li>
+      </ul>
+      <p>
+        <strong>Важно:</strong> возврат гарантируется только при отсутствии видимости. Если обзор
+        вышел и получил низкий балл — это не основание для возврата. Низкий балл — результат
+        нашей честности, а не недостаток.
+      </p>
+
+      <h2>Часто задаваемые вопросы</h2>
+
+      <h3>Что если мой обзор получит низкий балл?</h3>
+      <p>
+        Обзор всё равно публикуется и индексируется AI. Низкий балл тоже полезен — вы увидите,
+        что именно нужно улучшить. Через 2–3 месяца после реальных улучшений можно запросить
+        переоценку (бесплатное обновление).
+      </p>
+
+      <h3>Сколько занимает работа?</h3>
+      <p>
+        Написание обзора: 5–10 рабочих дней. Появление в AI и Google: 2–6 недель (зависит от
+        индексации). Гарантия рассчитана на 3 месяца — этого достаточно.
+      </p>
+
+      <h3>Для каких проектов услуга не подходит?</h3>
+      <p>
+        Не работаем с проектами политической или религиозной направленности. Также с явно
+        мошенническими или незаконными. Если такие сигналы появятся в процессе — мы остановим
+        работу и вернём оплату.
+      </p>
+
+      <h3>Что нельзя проверить в фактах?</h3>
+      <p>
+        Мы не используем закрытые источники: ИНН, налоговые документы, внутренние государственные
+        реестры. Только то, что доступно пользователю: сайт, соцсети, отзывы, рейтинги
+        приложений, открытые новости.
+        <a href="/ru/metodologiya">Методология подробно →</a>
+      </p>
+
+      <h3>Как оставить заявку?</h3>
+      <p>
+        Через Telegram-бот поддержки: <a href="https://t.me/nisbiysupport_bot" target="_blank" rel="noopener noreferrer">t.me/nisbiysupport_bot</a>.
+        Отправьте краткое описание проекта (достаточно ссылки на сайт). В течение 1 рабочего
+        дня мы пришлём точную смету и проект договора.
+      </p>
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-12 rounded-3xl border border-[color:var(--color-line)] dark:border-stone-800 p-6 sm:p-8 text-center">
+      <h2 class="text-xl sm:text-2xl font-semibold tracking-tight">Готовы начать?</h2>
+      <p class="mt-2 text-[color:var(--color-muted)]">
+        Пришлите несколько строк о проекте. Точное предложение — за 1 рабочий день.
+      </p>
+      <a
+        href="https://t.me/nisbiysupport_bot"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-6 inline-flex items-center gap-2 rounded-full bg-[color:var(--color-ink)] dark:bg-[color:var(--color-paper)] text-[color:var(--color-paper)] dark:text-[color:var(--color-ink)] px-6 py-3 text-sm font-medium hover:opacity-90 transition"
+      >
+        Написать в Telegram
+        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+        </svg>
+      </a>
+    </div>
+  </article>
+</BaseLayout>

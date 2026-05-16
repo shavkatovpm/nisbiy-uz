@@ -1,14 +1,16 @@
 ---
-import { ratingLabels } from '../lib/site';
+import { ratingLabels, ratingLabelsRu } from '../lib/site';
+import type { Lang } from '../lib/i18n';
 
 interface Props {
   rating: keyof typeof ratingLabels;
   score?: number | null;
   size?: 'sm' | 'md';
+  lang?: Lang;
 }
 
-const { rating, score = null, size = 'md' } = Astro.props;
-const meta = ratingLabels[rating];
+const { rating, score = null, size = 'md', lang = 'uz' } = Astro.props;
+const meta = (lang === 'ru' ? ratingLabelsRu : ratingLabels)[rating];
 
 const toneClasses: Record<string, string> = {
   fact: 'bg-[color:var(--color-fact-soft)] text-[color:var(--color-fact)]',

@@ -1,21 +1,40 @@
 ---
-import { nav, site } from '../lib/site';
+import { nav, navRu, site } from '../lib/site';
 import Logo from './Logo.astro';
+import { t, localePath, type Lang } from '../lib/i18n';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'uz' } = Astro.props;
 const pathname = Astro.url.pathname;
-const isActive = (href: string) =>
-  href === '/' ? pathname === '/' : pathname.startsWith(href);
+const items = lang === 'ru' ? navRu : nav;
+const isActive = (href: string) => {
+  if (href === '/' || href === '/ru') {
+    return pathname === href || pathname === `${href}/`;
+  }
+  return pathname === href || pathname.startsWith(`${href}/`);
+};
+
+// Sibling-locale URL for the language switcher
+const cleanPath = pathname.replace(/\/$/, '') || '/';
+const uzPath = cleanPath.startsWith('/ru') ? (cleanPath === '/ru' ? '/' : cleanPath.slice(3)) : cleanPath;
+const switchTo: Lang = lang === 'ru' ? 'uz' : 'ru';
+const switchHref = localePath(uzPath, switchTo);
+const switchLabel = switchTo === 'ru' ? 'RU' : 'UZ';
 ---
 
 <header class="sticky top-0 z-50 backdrop-blur-md bg-[color:var(--color-paper)]/80 dark:bg-[color:var(--color-ink)]/80 border-b border-[color:var(--color-line)] dark:border-stone-800">
   <div class="mx-auto max-w-[var(--container-wide)] px-4 sm:px-6">
     <div class="flex h-14 items-center justify-between">
-      <a href="/" class="inline-flex items-center" aria-label={`${site.name} — bosh sahifa`}>
+      <a href={lang === 'ru' ? '/ru' : '/'} class="inline-flex items-center" aria-label={`${site.name} — ${t[lang].homeAriaLabel}`}>
         <Logo size={20} />
       </a>
 
-      <nav aria-label="Asosiy navigatsiya" class="hidden sm:flex items-center gap-1 text-sm">
+      <nav aria-label={t[lang].mainNavLabel} class="hidden sm:flex items-center gap-1 text-sm">
         {
-          nav.map((item) => (
+          items.map((item) => (
             <a
               href={item.href}
               aria-current={isActive(item.href) ? 'page' : undefined}
@@ -30,22 +49,40 @@ const isActive = (href: string) =>
             </a>
           ))
         }
+        <a
+          href={switchHref}
+          aria-label={t[lang].languageSwitcherLabel}
+          class="ml-1 px-3 py-1.5 rounded-full text-xs font-semibold font-mono text-[color:var(--color-muted)] hover:text-[color:var(--color-ink)] dark:hover:text-[color:var(--color-paper)] border border-[color:var(--color-line)] dark:border-stone-800 hover:border-[color:var(--color-ink)]/30 dark:hover:border-stone-600 transition-colors"
+        >
+          {switchLabel}
+        </a>
       </nav>
 
-      <button
-        type="button"
-        class="burger-btn sm:hidden inline-flex items-center justify-center size-10 rounded-full hover:bg-[color:var(--color-paper-soft)] dark:hover:bg-stone-800 transition-colors"
-        aria-label="Menyuni ochish"
-        aria-expanded="false"
-        aria-controls="mobile-nav"
-        data-nav-toggle
-      >
-        <span aria-hidden="true" class="burger relative block w-[18px] h-[14px]">
-          <span class="burger-line absolute left-0 right-0 top-0 h-[1.6px] bg-current rounded-full"></span>
-          <span class="burger-line absolute left-0 right-0 top-[6.2px] h-[1.6px] bg-current rounded-full"></span>
-          <span class="burger-line absolute left-0 right-0 top-[12.4px] h-[1.6px] bg-current rounded-full"></span>
-        </span>
-      </button>
+      <div class="sm:hidden flex items-center gap-1">
+        <a
+          href={switchHref}
+          aria-label={t[lang].languageSwitcherLabel}
+          class="px-2.5 py-1.5 rounded-full text-[11px] font-semibold font-mono text-[color:var(--color-muted)] hover:text-[color:var(--color-ink)] dark:hover:text-[color:var(--color-paper)] border border-[color:var(--color-line)] dark:border-stone-800"
+        >
+          {switchLabel}
+        </a>
+        <button
+          type="button"
+          class="burger-btn inline-flex items-center justify-center size-10 rounded-full hover:bg-[color:var(--color-paper-soft)] dark:hover:bg-stone-800 transition-colors"
+          aria-label={t[lang].openMenu}
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+          data-nav-toggle
+          data-open-label={t[lang].openMenu}
+          data-close-label={t[lang].closeMenu}
+        >
+          <span aria-hidden="true" class="burger relative block w-[18px] h-[14px]">
+            <span class="burger-line absolute left-0 right-0 top-0 h-[1.6px] bg-current rounded-full"></span>
+            <span class="burger-line absolute left-0 right-0 top-[6.2px] h-[1.6px] bg-current rounded-full"></span>
+            <span class="burger-line absolute left-0 right-0 top-[12.4px] h-[1.6px] bg-current rounded-full"></span>
+          </span>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -58,11 +95,11 @@ const isActive = (href: string) =>
   >
     <div class="mx-auto max-w-[var(--container-wide)] px-4">
       <nav
-        aria-label="Mobil navigatsiya"
+        aria-label={t[lang].mobileNavLabel}
         class="mobile-nav mt-2 rounded-2xl border border-[color:var(--color-line)] dark:border-stone-800 bg-[color:var(--color-paper)]/95 dark:bg-[color:var(--color-ink-soft)]/95 backdrop-blur-xl shadow-[0_8px_30px_-12px_rgba(0,0,0,0.18)] dark:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.6)] p-2 overflow-hidden"
       >
         {
-          nav.map((item) => (
+          items.map((item) => (
             <a
               href={item.href}
               aria-current={isActive(item.href) ? 'page' : undefined}
@@ -184,7 +221,9 @@ const isActive = (href: string) =>
     if (!btn || !wrap) return;
     wrap.classList.toggle('open', open);
     btn.setAttribute('aria-expanded', String(open));
-    btn.setAttribute('aria-label', open ? 'Menyuni yopish' : 'Menyuni ochish');
+    const openLabel = btn.dataset.openLabel ?? 'Open menu';
+    const closeLabel = btn.dataset.closeLabel ?? 'Close menu';
+    btn.setAttribute('aria-label', open ? closeLabel : openLabel);
     wrap.setAttribute('aria-hidden', String(!open));
   }
 

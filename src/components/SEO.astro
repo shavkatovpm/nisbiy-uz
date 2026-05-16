@@ -1,5 +1,6 @@
 ---
 import { site } from '../lib/site';
+import { localePath, type Lang } from '../lib/i18n';
 
 interface Props {
   title: string;
@@ -10,6 +11,7 @@ interface Props {
   updatedAt?: Date;
   canonical?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  lang?: Lang;
 }
 
 const {
@@ -21,6 +23,7 @@ const {
   updatedAt,
   canonical,
   jsonLd,
+  lang = 'uz',
 } = Astro.props;
 
 const canonicalURL = canonical
@@ -31,6 +34,17 @@ const ogImageURL = new URL(image, site.url);
 const fullTitle = title === site.name ? title : `${title} — ${site.shortName}`;
 
 const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
+
+const ogLocale = lang === 'ru' ? 'ru_RU' : 'uz_UZ';
+const contentLang = lang === 'ru' ? 'ru' : 'uz';
+
+// hreflang alternates — derive sibling locale URL from canonical
+const rawPath = (canonical ?? Astro.url.pathname).replace(/\/$/, '') || '/';
+const uzPath = rawPath.startsWith('/ru') ? (rawPath === '/ru' ? '/' : rawPath.slice(3)) : rawPath;
+const ruPath = localePath(uzPath, 'ru');
+
+const uzAltUrl = new URL(uzPath === '/' ? '' : uzPath, site.url).href;
+const ruAltUrl = new URL(ruPath, site.url).href;
 ---
 
 <!-- Primary -->
@@ -38,6 +52,11 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 <meta name="description" content={description} />
 <link rel="canonical" href={canonicalURL.href} />
 <meta name="generator" content={Astro.generator} />
+
+<!-- Hreflang alternates -->
+<link rel="alternate" hreflang="uz" href={uzAltUrl} />
+<link rel="alternate" hreflang="ru" href={ruAltUrl} />
+<link rel="alternate" hreflang="x-default" href={uzAltUrl} />
 
 <!-- Charset / viewport -->
 <meta charset="UTF-8" />
@@ -60,12 +79,13 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 
 <!-- Locale / robots -->
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-<meta http-equiv="content-language" content={site.language} />
+<meta http-equiv="content-language" content={contentLang} />
 
 <!-- Open Graph -->
 <meta property="og:type" content={type} />
 <meta property="og:site_name" content={site.name} />
-<meta property="og:locale" content={site.locale} />
+<meta property="og:locale" content={ogLocale} />
+<meta property="og:locale:alternate" content={lang === 'ru' ? 'uz_UZ' : 'ru_RU'} />
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalURL.href} />

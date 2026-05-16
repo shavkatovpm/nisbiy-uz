@@ -1,12 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import RatingBadge from '../components/RatingBadge.astro';
-import { categoryLabels, site } from '../lib/site';
-import { resolveRating } from '../lib/rating';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RatingBadge from '../../components/RatingBadge.astro';
+import { categoryLabelsRu, site } from '../../lib/site';
+import { resolveRating } from '../../lib/rating';
+import { formatDateShort } from '../../lib/i18n';
 
-const projects = (await getCollection('projects', ({ data }) => !data.draft && data.lang === 'uz'))
+const projects = (await getCollection('projects', ({ data }) => !data.draft && data.lang === 'ru'))
   .sort((a, b) => (b.data.updatedAt ?? b.data.publishedAt).valueOf() - (a.data.updatedAt ?? a.data.publishedAt).valueOf());
 
 const featured = projects[0];
@@ -16,7 +16,7 @@ const featuredSlug = featured?.id.replace(/^(uz|ru)\//, '').replace(/\.[^.]+$/, 
 const featuredRating = featured ? resolveRating({ criteria: featured.data.criteria, manual: featured.data.rating }) : null;
 ---
 
-<BaseLayout title={site.name} description={site.description} canonical="/">
+<BaseLayout title={site.name} description={site.descriptionRu} canonical="/ru" lang="ru">
   <!-- ════ SECTION 1: HERO ════ -->
   <section class="hero-section relative overflow-hidden">
     <div aria-hidden="true" class="hero-bg pointer-events-none absolute inset-0 -z-10">
@@ -24,46 +24,46 @@ const featuredRating = featured ? resolveRating({ criteria: featured.data.criter
       <div class="hero-glow-soft absolute size-[14rem] rounded-full bg-stone-400/10 blur-2xl"></div>
     </div>
 
-    <!-- Spotlight reveal: methodology keywords lit when the glow circle visits each one -->
     <div aria-hidden="true" class="hero-spotlight pointer-events-none absolute inset-0 -z-10 hidden sm:block">
-      <span class="spot-word" style="left:72%; top:22%; font-size:clamp(2.5rem, 5vw, 4rem); --r:-2deg;">Faktlar</span>
-      <span class="spot-word" style="left:80%; top:52%; font-size:clamp(2.25rem, 4.5vw, 3.5rem); --r:1deg;">Fikrlar</span>
-      <span class="spot-word" style="left:68%; top:80%; font-size:clamp(2rem, 4vw, 3rem); --r:-1deg;">Manbalar</span>
-      <span class="spot-word" style="left:34%; top:82%; font-size:clamp(2rem, 4vw, 3rem); --r:2deg;">Mezonlar</span>
-      <span class="spot-word" style="left:14%; top:76%; font-size:clamp(2rem, 4vw, 3rem); --r:-1deg;">Tekshiruv</span>
+      <span class="spot-word" style="left:72%; top:22%; font-size:clamp(2.5rem, 5vw, 4rem); --r:-2deg;">Факты</span>
+      <span class="spot-word" style="left:80%; top:52%; font-size:clamp(2.25rem, 4.5vw, 3.5rem); --r:1deg;">Мнения</span>
+      <span class="spot-word" style="left:68%; top:80%; font-size:clamp(2rem, 4vw, 3rem); --r:-1deg;">Источники</span>
+      <span class="spot-word" style="left:34%; top:82%; font-size:clamp(2rem, 4vw, 3rem); --r:2deg;">Критерии</span>
+      <span class="spot-word" style="left:14%; top:76%; font-size:clamp(2rem, 4vw, 3rem); --r:-1deg;">Проверка</span>
     </div>
 
     <div class="mx-auto max-w-[var(--container-wide)] w-full px-4 sm:px-6 pt-20 pb-32 sm:pt-32 sm:pb-40 lg:pt-40 lg:pb-48">
-      <p class="hero-reveal text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)]" style="--delay:0ms">Nisbiy — mutlaq emas</p>
+      <p class="hero-reveal text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)]" style="--delay:0ms">Nisbiy — не абсолют</p>
       <h1 class="hero-reveal mt-4 text-4xl sm:text-6xl font-semibold tracking-tight leading-[1.05] max-w-3xl" style="--delay:80ms">
-        Tekshirilgan faktlar. <br class="hidden sm:block" />
-        <span class="text-[color:var(--color-muted)]">Ochiq fikrlar.</span>
+        Проверенные факты. <br class="hidden sm:block" />
+        <span class="text-[color:var(--color-muted)]">Открытые мнения.</span>
       </h1>
       <p class="hero-reveal mt-6 max-w-xl text-lg text-[color:var(--color-muted)] leading-relaxed" style="--delay:180ms">
-        O‘zbekistondagi loyihalar, kompaniyalar va xizmatlar haqida foydalanuvchi nuqtai nazaridan tekshirilgan ma’lumotlar va subyektiv tavsiyalar. Yakuniy qaror — sizniki.
+        Проверенные с точки зрения пользователя данные и субъективные рекомендации о проектах,
+        компаниях и сервисах Узбекистана. Окончательное решение — за вами.
       </p>
       <div class="hero-reveal mt-8 flex flex-wrap items-center gap-3" style="--delay:280ms">
-        <a href="/tahlillar" class="inline-flex items-center gap-2 rounded-full bg-[color:var(--color-ink)] dark:bg-[color:var(--color-paper)] text-[color:var(--color-paper)] dark:text-[color:var(--color-ink)] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition">
-          Tahlillarni ko‘rish
+        <a href="/ru/tahlillar" class="inline-flex items-center gap-2 rounded-full bg-[color:var(--color-ink)] dark:bg-[color:var(--color-paper)] text-[color:var(--color-paper)] dark:text-[color:var(--color-ink)] px-5 py-2.5 text-sm font-medium hover:opacity-90 transition">
+          Все обзоры
           <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
           </svg>
         </a>
-        <a href="/metodologiya" class="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-line)] dark:border-stone-700 px-5 py-2.5 text-sm font-medium hover:bg-[color:var(--color-paper-soft)] dark:hover:bg-stone-900 transition">
-          Qanday tekshiramiz
+        <a href="/ru/metodologiya" class="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-line)] dark:border-stone-700 px-5 py-2.5 text-sm font-medium hover:bg-[color:var(--color-paper-soft)] dark:hover:bg-stone-900 transition">
+          Как мы проверяем
         </a>
       </div>
     </div>
 
-    <a href="#printsiplar" aria-label="Pastga aylantirish" class="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 inline-flex flex-col items-center gap-1 text-[color:var(--color-muted)] hover:text-[color:var(--color-ink)] dark:hover:text-[color:var(--color-paper)] transition-colors">
-      <span class="text-[10px] uppercase tracking-wider">Davom etish</span>
+    <a href="#printsiplar" aria-label="Прокрутить вниз" class="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 inline-flex flex-col items-center gap-1 text-[color:var(--color-muted)] hover:text-[color:var(--color-ink)] dark:hover:text-[color:var(--color-paper)] transition-colors">
+      <span class="text-[10px] uppercase tracking-wider">Далее</span>
       <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="6 9 12 15 18 9" />
       </svg>
     </a>
   </section>
 
-  <!-- Wave divider: two layered drifting sea lines at the hero/printsiplar seam -->
+  <!-- Wave divider -->
   <div aria-hidden="true" class="wave-divider relative w-full">
     <svg class="wave-back" viewBox="0 0 1200 40" preserveAspectRatio="none">
       <path d="M0,20 Q150,4 300,20 T600,20 T900,20 T1200,20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -73,7 +73,7 @@ const featuredRating = featured ? resolveRating({ criteria: featured.data.criter
     </svg>
   </div>
 
-  <!-- ════ SECTION 2: PRINTSIPLAR ════ -->
+  <!-- ════ SECTION 2: PRINCIPLES ════ -->
   <section
     id="printsiplar"
     class="relative overflow-hidden scroll-mt-14"
@@ -82,26 +82,23 @@ const featuredRating = featured ? resolveRating({ criteria: featured.data.criter
 
     <div class="mx-auto max-w-[var(--container-wide)] w-full px-4 sm:px-6 py-24 sm:py-32 lg:py-40">
       <div class="grid gap-10 lg:gap-16 lg:grid-cols-[1fr_1.4fr] lg:items-start">
-        <!-- Left: section intro -->
         <div class="lg:sticky lg:top-24 scroll-reveal" style="--delay:0ms">
-          <p class="text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)]">Bizning printsipimiz</p>
+          <p class="text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)]">Наш принцип</p>
           <h2 class="mt-4 text-3xl sm:text-5xl font-semibold tracking-tight leading-[1.05]">
-            Uch sodda qoida.
+            Три простых правила.
           </h2>
           <p class="mt-5 text-[color:var(--color-muted)] leading-relaxed max-w-md">
-            Har bir tahlilimiz shu uch printsipga asoslangan. Bittasi buzilsa, biz uni chop etmaymiz.
+            Каждый наш обзор основан на этих трёх принципах. Если хоть один нарушен — мы не публикуем.
           </p>
-          <a href="/metodologiya" class="mt-6 inline-flex items-center gap-2 text-sm font-medium hover:underline underline-offset-4">
-            To‘liq metodologiya
+          <a href="/ru/metodologiya" class="mt-6 inline-flex items-center gap-2 text-sm font-medium hover:underline underline-offset-4">
+            Полная методология
             <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
             </svg>
           </a>
         </div>
 
-        <!-- Right: 3 manifesto cards with vertical connector -->
         <ol class="relative space-y-10 sm:space-y-14" role="list">
-          <!-- vertical connector -->
           <div aria-hidden="true" class="draw-line absolute left-[1.5rem] sm:left-[1.75rem] top-3 bottom-3 w-px bg-gradient-to-b from-[color:var(--color-fact)] via-[color:var(--color-opinion)] to-[color:var(--color-accent)] origin-top"></div>
 
           <li class="scroll-reveal relative flex gap-5 sm:gap-7" style="--delay:120ms">
@@ -111,11 +108,11 @@ const featuredRating = featured ? resolveRating({ criteria: featured.data.criter
               </div>
             </div>
             <div class="flex-1 pt-2">
-              <div class="text-xs uppercase tracking-wider text-[color:var(--color-fact)] font-semibold">Faktlar</div>
-              <h3 class="mt-1 text-2xl sm:text-3xl font-semibold tracking-tight">Tekshirilgan ma‘lumotlar.</h3>
+              <div class="text-xs uppercase tracking-wider text-[color:var(--color-fact)] font-semibold">Факты</div>
+              <h3 class="mt-1 text-2xl sm:text-3xl font-semibold tracking-tight">Проверенные данные.</h3>
               <p class="mt-3 text-[color:var(--color-muted)] leading-relaxed max-w-prose">
-                Manba ko‘rsatilmagan bironta da‘vo bizning tahlilda joy olmaydi. Saytlar, ijtimoiy tarmoqlar,
-                mijoz fikrlari — siz ham takrorlay oladigan manbalar.
+                Ни одно утверждение без источника не попадает в наш обзор. Сайты, соцсети,
+                отзывы клиентов — источники, которые вы можете перепроверить сами.
               </p>
             </div>
           </li>
@@ -127,11 +124,11 @@ const featuredRating = featured ? resolveRating({ criteria: featured.data.criter
               </div>
             </div>
             <div class="flex-1 pt-2">
-              <div class="text-xs uppercase tracking-wider text-[color:var(--color-opinion)] font-semibold">Fikrlar</div>
-              <h3 class="mt-1 text-2xl sm:text-3xl font-semibold tracking-tight">Ochiq subyektivlik.</h3>
+              <div class="text-xs uppercase tracking-wider text-[color:var(--color-opinion)] font-semibold">Мнения</div>
+              <h3 class="mt-1 text-2xl sm:text-3xl font-semibold tracking-tight">Открытая субъективность.</h3>
               <p class="mt-3 text-[color:var(--color-muted)] leading-relaxed max-w-prose">
-                Bizning fikrimiz alohida bo‘limda, aniq belgilab beriladi. Fakt va fikr aralashtirilmaydi —
-                qaysi gap manbadan, qaysi biri jamoadan ekani har doim ko‘rinib turadi.
+                Наше мнение всегда в отдельном блоке, явно помечено. Факт и мнение не смешиваются —
+                видно, какое утверждение из источника, а какое — от команды.
               </p>
             </div>
           </li>
@@ -143,11 +140,11 @@ const featuredRating = featured ? resolveRating({ criteria: featured.data.criter
               </div>
             </div>
             <div class="flex-1 pt-2">
-              <div class="text-xs uppercase tracking-wider text-[color:var(--color-accent)] font-semibold">Yakuniy qaror</div>
-              <h3 class="mt-1 text-2xl sm:text-3xl font-semibold tracking-tight">Yakuniy qaror sizniki.</h3>
+              <div class="text-xs uppercase tracking-wider text-[color:var(--color-accent)] font-semibold">Окончательное решение</div>
+              <h3 class="mt-1 text-2xl sm:text-3xl font-semibold tracking-tight">Решение за вами.</h3>
               <p class="mt-3 text-[color:var(--color-muted)] leading-relaxed max-w-prose">
-                Biz faktlarni va fikrimizni beramiz — lekin tanlovni siz qilasiz. Nisbiy.uz yakuniy “javob” emas,
-                qaroringizni qabul qilish jarayonidagi manbalardan biri.
+                Мы даём факты и мнение — выбор делаете вы. Nisbiy.uz не финальный «ответ»,
+                а один из источников в процессе принятия решения.
               </p>
             </div>
           </li>
@@ -156,41 +153,38 @@ const featuredRating = featured ? resolveRating({ criteria: featured.data.criter
     </div>
   </section>
 
-  <!-- ════ SECTION 3: NISBIY DEMO — "Bir fakt. Ikki qaror." ════ -->
+  <!-- ════ SECTION 3: NISBIY DEMO ════ -->
   <section class="relative border-t border-[color:var(--color-line)] dark:border-stone-800 overflow-hidden">
     <div class="mx-auto max-w-[var(--container-wide)] w-full px-4 sm:px-6 py-24 sm:py-32 lg:py-40">
       <div class="scroll-reveal max-w-2xl">
-        <p class="text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)]">Nisbiy nega “nisbiy”?</p>
+        <p class="text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)]">Почему «nisbiy» — «относительный»?</p>
         <h2 class="mt-4 text-3xl sm:text-5xl font-semibold tracking-tight leading-[1.05]">
-          Bir fakt. <span class="text-[color:var(--color-muted)]">Ikki qaror.</span>
+          Один факт. <span class="text-[color:var(--color-muted)]">Два решения.</span>
         </h2>
         <p class="mt-5 text-[color:var(--color-muted)] leading-relaxed">
-          Bizning vazifamiz — “to‘g‘ri javob” aytish emas. Bir xil fakt qanchalik turlicha o‘qilishi
-          mumkinligini ko‘rib chiqing.
+          Наша задача — не сказать «правильный ответ». Посмотрите, как один и тот же факт можно
+          прочитать совершенно по-разному.
         </p>
       </div>
 
-      <!-- Fact card -->
       <figure class="scroll-reveal relative mt-12 mx-auto max-w-3xl" style="--delay:120ms">
         <span class="absolute -top-3 left-6 inline-flex items-center gap-1.5 rounded-full bg-[color:var(--color-fact-soft)] text-[color:var(--color-fact)] px-3 py-1 text-[11px] uppercase tracking-wider font-semibold">
           <span aria-hidden="true" class="size-1.5 rounded-full bg-current"></span>
-          Fakt
+          Факт
         </span>
         <blockquote class="rounded-3xl border border-[color:var(--color-line)] dark:border-stone-800 bg-[color:var(--color-paper-soft)]/40 dark:bg-stone-900/40 px-6 sm:px-10 py-8 sm:py-10">
           <p class="text-xl sm:text-2xl leading-relaxed font-medium text-balance">
-            “X loyihasi 2024-yilda boshlangan va hozirda 12 mingdan ortiq foydalanuvchisi bor.”
+            «Проект X запущен в 2024 году и сейчас имеет более 12 000 пользователей.»
           </p>
         </blockquote>
       </figure>
 
-      <!-- Splitter / balance indicator -->
       <div aria-hidden="true" class="scroll-reveal mt-10 flex flex-col items-center gap-2 text-[color:var(--color-muted)]" style="--delay:220ms">
         <div class="h-8 w-px bg-current opacity-30"></div>
-        <span class="text-[10px] uppercase tracking-[0.2em]">Ikki tomondan</span>
+        <span class="text-[10px] uppercase tracking-[0.2em]">Две стороны</span>
         <div class="h-8 w-px bg-current opacity-30"></div>
       </div>
 
-      <!-- Two lenses (perspectives) -->
       <div class="mt-6 grid gap-5 lg:grid-cols-2">
         <article
           class="lens-card scroll-reveal group relative rounded-3xl border border-[color:var(--color-line)] dark:border-stone-800 p-7 sm:p-8 overflow-hidden bg-[color:var(--color-paper)] dark:bg-stone-950/50"
@@ -201,12 +195,12 @@ const featuredRating = featured ? resolveRating({ criteria: featured.data.criter
             <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="6 12 10 16 18 8" />
             </svg>
-            Bir tomondan
+            С одной стороны
           </div>
-          <h3 class="mt-3 text-xl sm:text-2xl font-semibold tracking-tight">Tez o‘sayotgan loyiha.</h3>
+          <h3 class="mt-3 text-xl sm:text-2xl font-semibold tracking-tight">Быстрорастущий проект.</h3>
           <p class="mt-3 text-[color:var(--color-muted)] leading-relaxed">
-            2 yilda 12 ming foydalanuvchi — yaxshi sur‘at. Yangi yondashuv, zamonaviy texnologiya,
-            eski cheklovlardan ozod. Sezgir auditoriyaga moslashishga ulguradi.
+            12 000 пользователей за 2 года — хорошая динамика. Новый подход, современные технологии,
+            свобода от старых ограничений. Успевает подстраиваться под чувствительную аудиторию.
           </p>
         </article>
 
@@ -221,52 +215,49 @@ const featuredRating = featured ? resolveRating({ criteria: featured.data.criter
               <line x1="12" y1="8" x2="12" y2="13" />
               <line x1="12" y1="16.5" x2="12" y2="17" />
             </svg>
-            Ikkinchi tomondan
+            С другой стороны
           </div>
-          <h3 class="mt-3 text-xl sm:text-2xl font-semibold tracking-tight">Tajriba hali yangi.</h3>
+          <h3 class="mt-3 text-xl sm:text-2xl font-semibold tracking-tight">Опыт ещё свежий.</h3>
           <p class="mt-3 text-[color:var(--color-muted)] leading-relaxed">
-            2 yil — bozor o‘zgarishlari va krizislarda qanday tutsa, hali ko‘rinmagan. 12 ming —
-            ko‘p, ammo 100 ming bilan solishtirsa, hozircha kichik. Uzoq muddatga ishonchi noma‘lum.
+            2 года — это слишком мало, чтобы оценить устойчивость к кризисам и изменениям рынка.
+            12 000 — много, но в сравнении с 100 000 пока скромно. Долгосрочная надёжность неясна.
           </p>
         </article>
       </div>
 
-      <!-- Punchline -->
       <div class="scroll-reveal mt-12 max-w-3xl mx-auto text-center" style="--delay:560ms">
         <p class="text-lg sm:text-xl text-[color:var(--color-muted)] leading-relaxed">
-          Bir xil fakt — ikki xil vazn.
+          Один факт — два разных веса.
         </p>
         <p class="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight leading-tight text-balance">
-          Sizning vazningiz — <span class="text-[color:var(--color-accent)]">sizning qaroringiz.</span>
+          Ваш вес — <span class="text-[color:var(--color-accent)]">ваше решение.</span>
         </p>
         <p class="mt-6 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)]">
           <span aria-hidden="true" class="inline-block size-1 rounded-full bg-[color:var(--color-accent)]"></span>
-          Shuning uchun biz nisbiy
+          Поэтому мы «nisbiy»
         </p>
       </div>
     </div>
   </section>
 
-  <!-- ════ SECTION 4: SO'NGGI TAHLILLAR (magazine-style) ════ -->
+  <!-- ════ SECTION 4: LATEST ANALYSES ════ -->
   <section class="relative border-t border-[color:var(--color-line)] dark:border-stone-800 overflow-hidden">
-    <!-- diagonal background accent -->
     <div aria-hidden="true" class="pointer-events-none absolute -top-32 -right-32 size-[28rem] rounded-full bg-[color:var(--color-opinion-soft)]/30 dark:bg-[color:var(--color-opinion)]/10 blur-3xl"></div>
 
     <div class="mx-auto max-w-[var(--container-wide)] w-full px-4 sm:px-6 py-24 sm:py-32 lg:py-40">
-      <!-- Header -->
       <div class="scroll-reveal flex items-end justify-between gap-4 flex-wrap">
         <div>
-          <p class="text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)]">Yangi nashr</p>
+          <p class="text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)]">Новая публикация</p>
           <h2 class="mt-3 text-3xl sm:text-5xl font-semibold tracking-tight leading-[1.05]">
-            So‘nggi tahlillar.
+            Последние обзоры.
           </h2>
           <p class="mt-3 text-[color:var(--color-muted)] max-w-md">
-            Yangilangan kontent va yangi loyihalar haqida tahlillarimiz.
+            Обновлённый контент и обзоры новых проектов.
           </p>
         </div>
-        <a href="/tahlillar" class="group inline-flex items-center gap-2 text-sm font-medium">
+        <a href="/ru/tahlillar" class="group inline-flex items-center gap-2 text-sm font-medium">
           <span class="relative">
-            Barchasi
+            Все
             <span aria-hidden="true" class="absolute inset-x-0 -bottom-1 h-px bg-current scale-x-100 group-hover:scale-x-0 origin-right transition-transform duration-300"></span>
             <span aria-hidden="true" class="absolute inset-x-0 -bottom-1 h-px bg-current scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 delay-150"></span>
           </span>
@@ -278,15 +269,14 @@ const featuredRating = featured ? resolveRating({ criteria: featured.data.criter
 
       {projects.length === 0 ? (
         <div class="scroll-reveal mt-12 rounded-3xl border border-dashed border-[color:var(--color-line)] dark:border-stone-800 p-16 text-center text-[color:var(--color-muted)]" style="--delay:120ms">
-          <p class="text-lg">Tez orada birinchi tahlillar paydo bo‘ladi.</p>
-          <p class="mt-2 text-sm">Hozircha — tizim tayyor.</p>
+          <p class="text-lg">Скоро появятся первые обзоры.</p>
+          <p class="mt-2 text-sm">А пока — система готова.</p>
         </div>
       ) : (
         <div class="mt-10 sm:mt-14 grid gap-6 lg:grid-cols-5 lg:items-stretch">
-          <!-- Featured (big) -->
           {featured && (
             <a
-              href={`/tahlillar/${featuredSlug}`}
+              href={`/ru/tahlillar/${featuredSlug}`}
               class="scroll-reveal group relative lg:col-span-3 rounded-3xl border border-[color:var(--color-line)] dark:border-stone-800 p-7 sm:p-10 flex flex-col overflow-hidden transition-all hover:border-[color:var(--color-ink)]/30 dark:hover:border-stone-600"
               style="--delay:120ms"
             >
@@ -294,10 +284,10 @@ const featuredRating = featured ? resolveRating({ criteria: featured.data.criter
 
               <div class="relative flex items-center gap-2 text-xs">
                 <span class="px-2 py-0.5 rounded-full bg-[color:var(--color-ink)] dark:bg-[color:var(--color-paper)] text-[color:var(--color-paper)] dark:text-[color:var(--color-ink)] font-medium">
-                  Tanlangan
+                  Избранное
                 </span>
                 <span class="uppercase tracking-wider text-[color:var(--color-muted)]">
-                  {categoryLabels[featured.data.category]}
+                  {categoryLabelsRu[featured.data.category]}
                 </span>
               </div>
 
@@ -310,9 +300,9 @@ const featuredRating = featured ? resolveRating({ criteria: featured.data.criter
               </p>
 
               <div class="relative mt-auto pt-6 flex items-center justify-between gap-3">
-                <RatingBadge rating={featuredRating!.bucket} score={featuredRating!.score} />
+                <RatingBadge rating={featuredRating!.bucket} score={featuredRating!.score} lang="ru" />
                 <span class="inline-flex items-center gap-1 text-sm font-medium">
-                  To‘liq tahlil
+                  Полный обзор
                   <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1">
                     <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
                   </svg>
@@ -321,12 +311,11 @@ const featuredRating = featured ? resolveRating({ criteria: featured.data.criter
             </a>
           )}
 
-          <!-- Side stack -->
           <div class="lg:col-span-2 grid gap-4 content-start">
             {rest.length === 0 && featured && (
               <div class="scroll-reveal rounded-3xl border border-dashed border-[color:var(--color-line)] dark:border-stone-800 p-8 text-sm text-[color:var(--color-muted)]" style="--delay:220ms">
-                <p class="font-medium text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)]">Yangi tahlillar yo‘lda</p>
-                <p class="mt-2">Birinchi tahlillarimiz e‘lon qilingach, shu yerda paydo bo‘ladi.</p>
+                <p class="font-medium text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)]">Новые обзоры в пути</p>
+                <p class="mt-2">Когда выйдут первые обзоры — они появятся здесь.</p>
               </div>
             )}
             {rest.map((entry, idx) => {
@@ -335,21 +324,21 @@ const featuredRating = featured ? resolveRating({ criteria: featured.data.criter
               const { bucket, score } = resolveRating({ criteria: entry.data.criteria, manual: entry.data.rating });
               return (
                 <a
-                  href={`/tahlillar/${slug}`}
+                  href={`/ru/tahlillar/${slug}`}
                   class="scroll-reveal group rounded-2xl border border-[color:var(--color-line)] dark:border-stone-800 p-5 hover:border-[color:var(--color-ink)]/30 dark:hover:border-stone-600 transition-all"
                   style={`--delay:${220 + idx * 80}ms`}
                 >
                   <div class="flex items-center justify-between gap-2 text-xs text-[color:var(--color-muted)]">
-                    <span class="uppercase tracking-wider">{categoryLabels[entry.data.category]}</span>
+                    <span class="uppercase tracking-wider">{categoryLabelsRu[entry.data.category]}</span>
                     <time datetime={date.toISOString()}>
-                      {new Intl.DateTimeFormat('uz-UZ', { month: 'short', day: 'numeric' }).format(date)}
+                      {formatDateShort(date, 'ru')}
                     </time>
                   </div>
                   <h3 class="mt-2 text-lg font-semibold tracking-tight group-hover:text-[color:var(--color-accent)] transition-colors line-clamp-2">
                     {entry.data.title}
                   </h3>
                   <div class="mt-3">
-                    <RatingBadge rating={bucket} score={score} size="sm" />
+                    <RatingBadge rating={bucket} score={score} size="sm" lang="ru" />
                   </div>
                 </a>
               );
@@ -360,54 +349,49 @@ const featuredRating = featured ? resolveRating({ criteria: featured.data.criter
     </div>
   </section>
 
-  <!-- ════ SECTION 5: BUYURTMA — "Sizning loyihangiz AI javoblarida" ════ -->
+  <!-- ════ SECTION 5: SERVICES CTA ════ -->
   <section class="relative border-t border-[color:var(--color-line)] dark:border-stone-800 overflow-hidden">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
       <div class="cta-glow absolute top-1/2 left-1/2 size-[32rem] rounded-full bg-[color:var(--color-accent-soft)]/40 dark:bg-[color:var(--color-accent)]/8 blur-3xl"></div>
     </div>
 
     <div class="mx-auto max-w-[var(--container-wide)] w-full px-4 sm:px-6 py-20 sm:py-32 lg:py-40">
-      <!-- Header -->
       <div class="text-center max-w-3xl mx-auto">
-        <p class="scroll-reveal text-[11px] sm:text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)]">Xizmat</p>
+        <p class="scroll-reveal text-[11px] sm:text-xs uppercase tracking-[0.2em] text-[color:var(--color-muted)]">Услуга</p>
         <h2 class="scroll-reveal mt-4 sm:mt-5 text-[2rem] leading-[1.1] sm:text-5xl lg:text-6xl font-semibold tracking-tight text-balance" style="--delay:120ms">
-          Loyihangiz —<br />
-          <span class="text-[color:var(--color-accent)]">AI javoblarida.</span>
+          Ваш проект —<br />
+          <span class="text-[color:var(--color-accent)]">в ответах AI.</span>
         </h2>
         <p class="scroll-reveal mt-4 sm:mt-5 text-base sm:text-xl text-[color:var(--color-muted)] leading-relaxed text-balance" style="--delay:200ms">
-          Loyihangiz haqida biz tahlil yozamiz. AI sizdan so‘ralganda — Nisbiy.uz orqali sizni topadi.
+          Мы пишем обзор вашего проекта. Когда AI спросят — он найдёт вас через Nisbiy.uz.
         </p>
       </div>
 
-      <!-- AI Chat mockup -->
       <div class="scroll-reveal mt-10 sm:mt-14 max-w-2xl mx-auto" style="--delay:320ms">
         <div class="rounded-2xl sm:rounded-3xl border border-[color:var(--color-line)] dark:border-stone-800 bg-[color:var(--color-paper-soft)]/40 dark:bg-stone-900/40 backdrop-blur-sm p-4 sm:p-7 space-y-4">
-          <!-- Chat header -->
           <div class="flex items-center justify-between border-b border-[color:var(--color-line)]/60 dark:border-stone-800/60 pb-3 text-[11px] sm:text-xs text-[color:var(--color-muted)]">
             <span class="inline-flex items-center gap-1.5 sm:gap-2">
               <span aria-hidden="true" class="size-1.5 rounded-full bg-[color:var(--color-fact)] animate-pulse"></span>
-              AI suhbati
+              Чат с AI
             </span>
-            <span class="uppercase tracking-wider">misol</span>
+            <span class="uppercase tracking-wider">пример</span>
           </div>
 
-          <!-- User bubble -->
           <div class="flex gap-2.5 sm:gap-3">
             <div aria-hidden="true" class="shrink-0 size-7 sm:size-8 rounded-full bg-[color:var(--color-paper)] dark:bg-stone-800 border border-[color:var(--color-line)] dark:border-stone-700 flex items-center justify-center text-[11px] sm:text-xs font-semibold text-[color:var(--color-muted)]">
-              S
+              V
             </div>
             <div class="flex-1 min-w-0">
-              <div class="text-[10px] uppercase tracking-wider text-[color:var(--color-muted)] mb-1.5">Siz</div>
+              <div class="text-[10px] uppercase tracking-wider text-[color:var(--color-muted)] mb-1.5">Вы</div>
               <div class="rounded-2xl rounded-tl-sm bg-[color:var(--color-paper)] dark:bg-stone-800 border border-[color:var(--color-line)] dark:border-stone-700 px-3.5 py-2.5 sm:px-4 sm:py-3 text-[15px] sm:text-sm break-words">
                 «<span
                   class="rotate-word inline-block min-w-[7ch] sm:min-w-[8ch] text-left text-[color:var(--color-accent)] font-medium"
                   data-words='["Click","Uzum Market","Bolajon kursi","Alif Mobi","Yandex Go","Eskiz.uz"]'
-                >Click</span> ishonchlimi?»
+                >Click</span> надёжен?»
               </div>
             </div>
           </div>
 
-          <!-- AI bubble -->
           <div class="flex gap-2.5 sm:gap-3">
             <div aria-hidden="true" class="shrink-0 size-7 sm:size-8 rounded-full bg-gradient-to-br from-[color:var(--color-accent)] to-[color:var(--color-accent)]/70 text-[color:var(--color-paper)] flex items-center justify-center text-xs sm:text-sm font-semibold">
               ✦
@@ -415,7 +399,7 @@ const featuredRating = featured ? resolveRating({ criteria: featured.data.criter
             <div class="flex-1 min-w-0">
               <div class="text-[10px] uppercase tracking-wider text-[color:var(--color-muted)] mb-1.5">AI</div>
               <div class="rounded-2xl rounded-tl-sm bg-[color:var(--color-accent-soft)]/40 dark:bg-[color:var(--color-accent)]/10 border border-[color:var(--color-accent)]/30 px-3.5 py-2.5 sm:px-4 sm:py-3 text-[15px] sm:text-sm leading-relaxed break-words">
-                <span>Bu loyiha haqida Nisbiy.uz‘da to‘liq tahlil bor: 100 ballik baho, tekshirilgan faktlar va jamoa fikri.</span>
+                <span>На Nisbiy.uz есть полный обзор этого проекта: оценка из 100, проверенные факты и мнение команды.</span>
                 <span aria-hidden="true" class="ai-cursor inline-block w-[2px] h-[1em] bg-current ml-0.5 align-middle"></span>
               </div>
               <div class="mt-2 text-[11px] sm:text-xs text-[color:var(--color-muted)] flex items-center gap-1.5 min-w-0">
@@ -424,19 +408,18 @@ const featuredRating = featured ? resolveRating({ criteria: featured.data.criter
                   <polyline points="15 3 21 3 21 9" />
                   <line x1="10" y1="14" x2="21" y2="3" />
                 </svg>
-                <span class="truncate">Manba: <span class="font-mono">nisbiy.uz/tahlillar/...</span></span>
+                <span class="truncate">Источник: <span class="font-mono">nisbiy.uz/tahlillar/...</span></span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Pricing summary + CTA -->
       <div class="scroll-reveal mt-10 sm:mt-14 text-center max-w-2xl mx-auto" style="--delay:480ms">
         <p class="text-[color:var(--color-muted)] leading-relaxed text-balance">
-          <strong class="text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)]">$100</strong>‘dan boshlanadi.
-          AI yoki Google‘da chiqmasangiz —
-          <strong class="text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)]">to‘lov to‘liq qaytariladi</strong>.
+          От <strong class="text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)]">$100</strong>.
+          Если не появитесь в AI или Google —
+          <strong class="text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)]">возвращаем 100% оплаты</strong>.
         </p>
 
         <div class="mt-7 sm:mt-8 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center justify-center gap-3">
@@ -449,25 +432,23 @@ const featuredRating = featured ? resolveRating({ criteria: featured.data.criter
             <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="shrink-0">
               <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/>
             </svg>
-            <span>Telegram‘da yozish</span>
+            <span>Написать в Telegram</span>
             <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 transition-transform group-hover:translate-x-0.5">
               <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
             </svg>
           </a>
           <a
-            href="/xizmatlar"
+            href="/ru/xizmatlar"
             class="inline-flex items-center justify-center gap-2 rounded-full border border-[color:var(--color-line)] dark:border-stone-700 px-5 sm:px-6 py-3 text-sm font-medium hover:bg-[color:var(--color-paper-soft)] dark:hover:bg-stone-900 transition"
           >
-            Batafsil ko‘rish
+            Подробнее
           </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Scroll reveal + rotating word -->
   <script>
-    // Scroll reveal
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -481,7 +462,6 @@ const featuredRating = featured ? resolveRating({ criteria: featured.data.criter
     );
     document.querySelectorAll<HTMLElement>('.scroll-reveal, .draw-line').forEach((el) => io.observe(el));
 
-    // Rotating word in CTA
     const rotateEl = document.querySelector<HTMLElement>('.rotate-word');
     if (rotateEl) {
       const words = JSON.parse(rotateEl.dataset.words || '[]') as string[];

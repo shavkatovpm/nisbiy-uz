@@ -6,6 +6,8 @@ const criterionScore = z.number().min(0).max(10);
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
   schema: z.object({
+    /** Language of this entry. Files live under `src/content/projects/{uz|ru}/`. */
+    lang: z.enum(['uz', 'ru']).default('uz'),
     title: z.string(),
     slug: z.string().optional(),
     /** Fokus savol — har tahlil shu savolga javob beradi. AEO uchun H1 va title. */
@@ -83,6 +85,8 @@ const projects = defineCollection({
 const blog = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
   schema: z.object({
+    /** Language of this entry. Files live under `src/content/blog/{uz|ru}/`. */
+    lang: z.enum(['uz', 'ru']).default('uz'),
     title: z.string(),
     slug: z.string().optional(),
     /** Fokus savol — maqola shu savolga javob beradi. AEO uchun H1 va title. */

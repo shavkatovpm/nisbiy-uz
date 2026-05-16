@@ -6,7 +6,10 @@ export const site = {
   language: 'uz',
   description:
     "O'zbekistondagi loyihalar, kompaniyalar va xizmatlar haqida foydalanuvchi nuqtai nazaridan tekshirilgan faktlar va subyektiv tavsiyalar. Manba: saytlar, ijtimoiy tarmoqlar, mijoz fikrlari va ochiq yangiliklar.",
+  descriptionRu:
+    'Nisbiy.uz — проверенные факты и субъективные рекомендации о проектах, компаниях и сервисах Узбекистана с точки зрения пользователя. Источники: сайты, соцсети, отзывы клиентов и публикации.',
   tagline: 'Tekshirilgan faktlar. Ochiq fikrlar.',
+  taglineRu: 'Проверенные факты. Открытые мнения.',
   twitter: '@nisbiyuz',
   ogImage: '/og-default.png',
   publisher: {
@@ -26,11 +29,27 @@ export const nav = [
   { href: '/about', label: 'Haqimizda' },
 ] as const;
 
+export const navRu = [
+  { href: '/ru', label: 'Главная' },
+  { href: '/ru/tahlillar', label: 'Обзоры' },
+  { href: '/ru/blog', label: 'Блог' },
+  { href: '/ru/metodologiya', label: 'Метод' },
+  { href: '/ru/xizmatlar', label: 'Услуги' },
+  { href: '/ru/about', label: 'О нас' },
+] as const;
+
 export const ratingLabels = {
   recommended: { label: 'Tavsiya etiladi', tone: 'fact', minScore: 80 },
   caution: { label: 'Ehtiyot bo‘ling', tone: 'opinion', minScore: 60 },
   avoid: { label: 'Tavsiya etilmaydi', tone: 'warn', minScore: 0 },
   unrated: { label: 'Baholanmagan', tone: 'muted', minScore: null },
+} as const;
+
+export const ratingLabelsRu = {
+  recommended: { label: 'Рекомендуется', tone: 'fact', minScore: 80 },
+  caution: { label: 'С осторожностью', tone: 'opinion', minScore: 60 },
+  avoid: { label: 'Не рекомендуется', tone: 'warn', minScore: 0 },
+  unrated: { label: 'Без оценки', tone: 'muted', minScore: null },
 } as const;
 
 export const criteriaLabels = {
@@ -46,6 +65,19 @@ export const criteriaLabels = {
   history: { name: 'Faoliyat tarixi', group: 'Reputatsiya' },
 } as const;
 
+export const criteriaLabelsRu = {
+  site: { name: 'Качество сайта', group: 'Идентичность и доверие' },
+  identity: { name: 'Прозрачность компании', group: 'Идентичность и доверие' },
+  contact: { name: 'Каналы связи', group: 'Идентичность и доверие' },
+  pricing: { name: 'Прозрачность цен', group: 'Предложение и условия' },
+  refund: { name: 'Возврат/гарантия', group: 'Предложение и условия' },
+  quality: { name: 'Качество продукта', group: 'Качество' },
+  support: { name: 'Поддержка', group: 'Качество' },
+  ux: { name: 'UX приложения/сайта', group: 'Качество' },
+  social: { name: 'Соцсети', group: 'Репутация' },
+  history: { name: 'История деятельности', group: 'Репутация' },
+} as const;
+
 export const categoryLabels = {
   edtech: 'Ta‘lim',
   fintech: 'Moliya',
@@ -58,6 +90,18 @@ export const categoryLabels = {
   other: 'Boshqa',
 } as const;
 
+export const categoryLabelsRu = {
+  edtech: 'Образование',
+  fintech: 'Финансы',
+  marketplace: 'Маркетплейс',
+  media: 'Медиа',
+  gov: 'Госсектор',
+  startup: 'Стартап',
+  service: 'Услуга',
+  product: 'Продукт',
+  other: 'Другое',
+} as const;
+
 export const blogCategoryLabels = {
   yoriqnoma: 'Yo‘riqnoma',
   royxat: 'Ro‘yxat',
@@ -66,9 +110,24 @@ export const blogCategoryLabels = {
   fikr: 'Fikr',
 } as const;
 
+export const blogCategoryLabelsRu = {
+  yoriqnoma: 'Руководство',
+  royxat: 'Список',
+  taqqoslash: 'Сравнение',
+  yangiliklar: 'Новости',
+  fikr: 'Мнение',
+} as const;
+
 export const ctaTypeLabels = {
   editorial: { label: 'Tavsiya', tone: 'muted' },
   partner: { label: 'Hamkor', tone: 'accent' },
   own: { label: 'Bizning loyiha', tone: 'opinion' },
   sponsored: { label: 'Hamkorlik bilan', tone: 'opinion' },
+} as const;
+
+export const ctaTypeLabelsRu = {
+  editorial: { label: 'Рекомендация', tone: 'muted' },
+  partner: { label: 'Партнёр', tone: 'accent' },
+  own: { label: 'Наш проект', tone: 'opinion' },
+  sponsored: { label: 'На правах рекламы', tone: 'opinion' },
 } as const;

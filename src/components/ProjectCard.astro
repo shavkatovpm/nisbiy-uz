@@ -1,7 +1,8 @@
 ---
-import { categoryLabels } from '../lib/site';
+import { categoryLabels, categoryLabelsRu } from '../lib/site';
 import RatingBadge from './RatingBadge.astro';
 import { resolveRating, type Criteria, type RatingBucket } from '../lib/rating';
+import { localePath, formatDateShort, type Lang } from '../lib/i18n';
 
 interface Props {
   entry: {
@@ -16,25 +17,27 @@ interface Props {
       publishedAt: Date;
     };
   };
+  lang?: Lang;
 }
 
-const { entry } = Astro.props;
+const { entry, lang = 'uz' } = Astro.props;
 const { title, summary, category, criteria, rating: manual, publishedAt, updatedAt } = entry.data;
-const slug = entry.id.replace(/\.[^.]+$/, '');
+const slug = entry.id.replace(/^(uz|ru)\//, '').replace(/\.[^.]+$/, '');
 const date = updatedAt ?? publishedAt;
 const { bucket: rating, score } = resolveRating({ criteria, manual });
+const catLabels = lang === 'ru' ? categoryLabelsRu : categoryLabels;
 ---
 
 <article class="group">
   <a
-    href={`/tahlillar/${slug}`}
+    href={localePath(`/tahlillar/${slug}`, lang)}
     class="block rounded-2xl border border-[color:var(--color-line)] dark:border-stone-800 p-5 sm:p-6 transition-all hover:border-[color:var(--color-ink)]/30 dark:hover:border-stone-600 hover:-translate-y-0.5"
   >
     <div class="flex items-center gap-2 text-xs text-[color:var(--color-muted)]">
-      <span class="uppercase tracking-wider">{categoryLabels[category]}</span>
+      <span class="uppercase tracking-wider">{catLabels[category]}</span>
       <span aria-hidden="true">·</span>
       <time datetime={date.toISOString()}>
-        {new Intl.DateTimeFormat('uz-UZ', { year: 'numeric', month: 'short', day: 'numeric' }).format(date)}
+        {formatDateShort(date, lang)}
       </time>
     </div>
     <h3 class="mt-2 text-xl font-semibold tracking-tight text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)] group-hover:text-[color:var(--color-accent)] transition-colors">
@@ -42,7 +45,7 @@ const { bucket: rating, score } = resolveRating({ criteria, manual });
     </h3>
     <p class="mt-2 text-sm text-[color:var(--color-muted)] line-clamp-3 leading-relaxed">{summary}</p>
     <div class="mt-4">
-      <RatingBadge rating={rating} score={score} size="sm" />
+      <RatingBadge rating={rating} score={score} size="sm" lang={lang} />
     </div>
   </a>
 </article>

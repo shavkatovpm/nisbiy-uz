@@ -1,4 +1,6 @@
 ---
+import { formatDate, type Lang } from '../lib/i18n';
+
 interface Fact {
   claim: string;
   source?: string;
@@ -8,12 +10,12 @@ interface Fact {
 
 interface Props {
   facts: Fact[];
+  lang?: Lang;
 }
 
-const { facts } = Astro.props;
-
-const fmt = (d?: Date) =>
-  d ? new Intl.DateTimeFormat('uz-UZ', { year: 'numeric', month: 'long', day: 'numeric' }).format(d) : null;
+const { facts, lang = 'uz' } = Astro.props;
+const sourceLabel = lang === 'ru' ? 'Источник' : 'Manba';
+const verifiedLabel = lang === 'ru' ? 'Проверено' : 'Tekshirilgan';
 ---
 
 <ol class="space-y-3 not-prose" role="list">
@@ -40,10 +42,10 @@ const fmt = (d?: Date) =>
                       <polyline points="15 3 21 3 21 9" />
                       <line x1="10" y1="14" x2="21" y2="3" />
                     </svg>
-                    Manba{f.sourceLabel ? `: ${f.sourceLabel}` : ''}
+                    {sourceLabel}{f.sourceLabel ? `: ${f.sourceLabel}` : ''}
                   </a>
                 )}
-                {f.verifiedAt && <span>Tekshirilgan: {fmt(f.verifiedAt)}</span>}
+                {f.verifiedAt && <span>{verifiedLabel}: {formatDate(f.verifiedAt, lang)}</span>}
               </div>
             )}
           </div>

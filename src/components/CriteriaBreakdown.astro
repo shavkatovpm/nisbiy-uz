@@ -1,15 +1,18 @@
 ---
-import { criteriaLabels } from '../lib/site';
+import { criteriaLabels, criteriaLabelsRu } from '../lib/site';
 import { scoreCriteria, totalScore, type Criteria, type CriterionKey } from '../lib/rating';
+import type { Lang } from '../lib/i18n';
 
 interface Props {
   criteria: Criteria;
+  lang?: Lang;
 }
 
-const { criteria } = Astro.props;
+const { criteria, lang = 'uz' } = Astro.props;
 
 const scored = scoreCriteria(criteria);
 const total = totalScore(criteria) ?? 0;
+const labels = lang === 'ru' ? criteriaLabelsRu : criteriaLabels;
 
 const colorFor = (score: number) => {
   if (score >= 8) return 'fact';
@@ -24,22 +27,25 @@ const tone: Record<string, string> = {
   muted: 'bg-[color:var(--color-line)] dark:bg-stone-700',
 };
 
-// Guruh bo'yicha grupp
-const groupOrder = [
-  'Identitet va ishonch',
-  'Taklif va shartlar',
-  'Sifat',
-  'Reputatsiya',
-];
+// Group order — picked from current locale's labels so grouping survives translation
+const groupOrder = lang === 'ru'
+  ? ['Идентичность и доверие', 'Предложение и условия', 'Качество', 'Репутация']
+  : ['Identitet va ishonch', 'Taklif va shartlar', 'Sifat', 'Reputatsiya'];
+
 const grouped = groupOrder.map((g) => ({
   group: g,
-  items: scored.filter(({ key }) => criteriaLabels[key as CriterionKey].group === g),
+  items: scored.filter(({ key }) => labels[key as CriterionKey].group === g),
 }));
+
+const headingLabel = lang === 'ru' ? 'Критерии оценки' : 'Baholash mezonlari';
+const subText = lang === 'ru'
+  ? 'Каждый критерий — 0–10 баллов. Если не применим к проекту — нейтральные 5 баллов.'
+  : 'Har mezon 0–10 ball. Loyihaga taalluqli bo‘lmagani — neytral 5 ball.';
 ---
 
 <div class="not-prose">
   <div class="flex items-baseline justify-between gap-3">
-    <h2 class="text-xl font-semibold tracking-tight">Baholash mezonlari</h2>
+    <h2 class="text-xl font-semibold tracking-tight">{headingLabel}</h2>
     <div class="text-right">
       <div class="font-mono text-3xl sm:text-4xl font-semibold tabular-nums tracking-tight">
         {total}<span class="text-[color:var(--color-muted)] text-xl">/100</span>
@@ -48,7 +54,7 @@ const grouped = groupOrder.map((g) => ({
   </div>
 
   <p class="mt-1 text-xs text-[color:var(--color-muted)]">
-    Har mezon 0–10 ball. Loyihaga taalluqli bo‘lmagani — neytral 5 ball.
+    {subText}
   </p>
 
   <div class="mt-6 grid gap-6 sm:grid-cols-2">
@@ -60,7 +66,7 @@ const grouped = groupOrder.map((g) => ({
           </h3>
           <ul class="mt-3 space-y-3" role="list">
             {g.items.map(({ key, score, provided }) => {
-              const label = criteriaLabels[key as CriterionKey].name;
+              const label = labels[key as CriterionKey].name;
               const color = colorFor(score);
               return (
                 <li>

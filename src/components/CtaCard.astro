@@ -1,15 +1,18 @@
 ---
-import { ctaTypeLabels } from '../lib/site';
+import { ctaTypeLabels, ctaTypeLabelsRu } from '../lib/site';
+import type { Lang } from '../lib/i18n';
 
 interface Props {
   label: string;
   url: string;
   description?: string;
   type?: keyof typeof ctaTypeLabels;
+  lang?: Lang;
 }
 
-const { label, url, description, type = 'editorial' } = Astro.props;
-const meta = ctaTypeLabels[type];
+const { label, url, description, type = 'editorial', lang = 'uz' } = Astro.props;
+const meta = (lang === 'ru' ? ctaTypeLabelsRu : ctaTypeLabels)[type];
+const goToSiteLabel = lang === 'ru' ? 'Перейти на сайт' : 'Saytga o‘tish';
 
 const toneClasses: Record<string, string> = {
   muted:
@@ -59,7 +62,7 @@ const hostname = (() => {
       rel={type === 'sponsored' || type === 'partner' ? 'noopener sponsored' : 'noopener noreferrer'}
       class="inline-flex items-center gap-2 rounded-full bg-[color:var(--color-ink)] dark:bg-[color:var(--color-paper)] text-[color:var(--color-paper)] dark:text-[color:var(--color-ink)] px-4 py-2 text-sm font-medium hover:opacity-90 transition"
     >
-      Saytga o‘tish
+      {goToSiteLabel}
       <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M10 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" />
         <polyline points="15 3 21 3 21 9" />

@@ -4,6 +4,7 @@ import SEO from '../components/SEO.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { site } from '../lib/site';
+import { htmlLang, t, type Lang } from '../lib/i18n';
 
 interface Props {
   title: string;
@@ -15,6 +16,7 @@ interface Props {
   canonical?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   hideHeader?: boolean;
+  lang?: Lang;
 }
 
 const {
@@ -27,6 +29,7 @@ const {
   canonical,
   jsonLd,
   hideHeader = false,
+  lang = 'uz',
 } = Astro.props;
 
 const websiteSchema = {
@@ -34,11 +37,11 @@ const websiteSchema = {
   '@type': 'WebSite',
   name: site.name,
   url: site.url,
-  inLanguage: 'uz-UZ',
+  inLanguage: htmlLang[lang],
   publisher: site.publisher,
   potentialAction: {
     '@type': 'SearchAction',
-    target: `${site.url}/tahlillar?q={search_term_string}`,
+    target: `${site.url}${lang === 'ru' ? '/ru' : ''}/tahlillar?q={search_term_string}`,
     'query-input': 'required name=search_term_string',
   },
 };
@@ -51,7 +54,7 @@ const allLd = Array.isArray(jsonLd)
 ---
 
 <!doctype html>
-<html lang={site.language} dir="ltr">
+<html lang={lang} dir="ltr">
   <head>
     <SEO
       title={title}
@@ -62,6 +65,7 @@ const allLd = Array.isArray(jsonLd)
       updatedAt={updatedAt}
       canonical={canonical}
       jsonLd={allLd}
+      lang={lang}
     />
   </head>
   <body class="min-h-screen flex flex-col antialiased">
@@ -69,12 +73,12 @@ const allLd = Array.isArray(jsonLd)
       href="#main"
       class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-3 focus:py-2 focus:rounded-lg focus:bg-[color:var(--color-ink)] focus:text-[color:var(--color-paper)]"
     >
-      Asosiy kontentga o‘tish
+      {t[lang].skipToContent}
     </a>
-    {!hideHeader && <Header />}
+    {!hideHeader && <Header lang={lang} />}
     <main id="main" class="flex-1">
       <slot />
     </main>
-    <Footer />
+    <Footer lang={lang} />
   </body>
 </html>
