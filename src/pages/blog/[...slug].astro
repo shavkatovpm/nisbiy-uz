@@ -65,8 +65,6 @@ const fmt = (d: Date) =>
 
 const dateToShow = data.updatedAt ?? data.publishedAt;
 const dateLabel = data.updatedAt ? 'Yangilangan' : 'Chop etilgan';
-
-const hasSensitiveCtas = data.ctas.some((c) => c.type === 'own' || c.type === 'sponsored');
 ---
 
 <BaseLayout
@@ -113,12 +111,6 @@ const hasSensitiveCtas = data.ctas.some((c) => c.type === 'own' || c.type === 's
       <p class="mt-5 text-lg text-[color:var(--color-muted)] leading-relaxed text-balance">
         {data.summary}
       </p>
-
-      {hasSensitiveCtas && (
-        <aside class="mt-6 rounded-xl border border-dashed border-[color:var(--color-opinion)]/40 bg-[color:var(--color-opinion-soft)]/30 p-3 text-xs text-[color:var(--color-opinion)]">
-          <strong class="font-semibold">Oshkor qilish:</strong> Bu maqolada Nisbiy.uz jamoasining o'z loyihalari yoki hamkor loyihalar haqida havola bor — har biri o'z yorlig'i bilan belgilangan.
-        </aside>
-      )}
     </header>
 
     <!-- Body content -->
