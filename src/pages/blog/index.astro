@@ -1,7 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { blogCategoryLabels } from '../../lib/site';
+import { blogCategoryLabels, site } from '../../lib/site';
+import { itemListJsonLd, breadcrumbJsonLd } from '../../lib/schema';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft && data.lang === 'uz')).sort(
   (a, b) =>
@@ -10,12 +11,34 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft && data.lan
 );
 
 const cats = Array.from(new Set(posts.map((p) => p.data.category)));
+
+const description = "O‘zbekistondagi mahsulot va xizmatlar haqida yo‘riqnomalar, ro‘yxatlar, taqqoslashlar va fikrlar.";
+
+const jsonLd = [
+  itemListJsonLd({
+    name: 'Blog — Nisbiy.uz',
+    description,
+    items: posts.map((p) => {
+      const slug = p.id.replace(/^(uz|ru)\//, '').replace(/\.[^.]+$/, '');
+      return {
+        name: p.data.title,
+        url: new URL(`/blog/${slug}`, site.url).href,
+        description: p.data.summary,
+      };
+    }),
+  }),
+  breadcrumbJsonLd([
+    { name: 'Asosiy', url: site.url },
+    { name: 'Blog', url: new URL('/blog', site.url).href },
+  ]),
+];
 ---
 
 <BaseLayout
   title="Blog"
-  description="O‘zbekistondagi mahsulot va xizmatlar haqida yo‘riqnomalar, ro‘yxatlar, taqqoslashlar va fikrlar."
+  description={description}
   canonical="/blog"
+  jsonLd={jsonLd}
 >
   <section class="mx-auto max-w-[var(--container-wide)] px-4 sm:px-6 pt-10 sm:pt-16">
     <header class="max-w-2xl">

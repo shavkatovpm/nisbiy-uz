@@ -12,6 +12,8 @@ interface Props {
   canonical?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   lang?: Lang;
+  /** Optional URL (relative or absolute) of a parallel Markdown version of this page — exposed for AI/LLM consumers. */
+  mdAlternate?: string;
 }
 
 const {
@@ -24,6 +26,7 @@ const {
   canonical,
   jsonLd,
   lang = 'uz',
+  mdAlternate,
 } = Astro.props;
 
 const canonicalURL = canonical
@@ -76,6 +79,9 @@ const ruAltUrl = new URL(ruPath, site.url).href;
 <!-- Discovery -->
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link rel="alternate" type="application/rss+xml" title={`${site.name} — RSS`} href="/rss.xml" />
+{mdAlternate && (
+  <link rel="alternate" type="text/markdown" title={`${title} — Markdown`} href={new URL(mdAlternate, site.url).href} />
+)}
 
 <!-- Locale / robots -->
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />

@@ -76,6 +76,7 @@ const dateLabel = data.updatedAt ? 'Yangilangan' : 'Chop etilgan';
   updatedAt={data.updatedAt}
   canonical={canonical}
   jsonLd={jsonLd}
+  mdAlternate={`${canonical}.md`}
 >
   <article class="mx-auto max-w-[var(--container-content)] px-4 sm:px-6 pt-10 sm:pt-16 pb-16">
     <!-- Breadcrumb -->
@@ -156,7 +157,11 @@ const dateLabel = data.updatedAt ? 'Yangilangan' : 'Chop etilgan';
     <!-- Footer -->
     <footer class="mt-12 border-t border-[color:var(--color-line)] dark:border-stone-800 pt-6 flex flex-wrap items-center justify-between gap-3 text-xs text-[color:var(--color-muted)]">
       <a href="/blog" class="hover:underline underline-offset-4">← Barcha maqolalar</a>
-      <span>Manba sifatida sitatalashda: <code class="font-mono">{fullUrl}</code></span>
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+        <a href={`${canonical}.md`} class="hover:underline underline-offset-4">Markdown versiya</a>
+        <span aria-hidden="true">·</span>
+        <span>Sitatalashda: <code class="font-mono">{fullUrl}</code></span>
+      </div>
     </footer>
   </article>
 </BaseLayout>

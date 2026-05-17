@@ -95,3 +95,28 @@ export function breadcrumbJsonLd(items: { name: string; url: string }[]) {
     })),
   };
 }
+
+/**
+ * ItemList JSON-LD for catalog/index pages. Helps AI assistants understand
+ * "here is the full list of analyses/posts on this site" in a single object.
+ */
+export function itemListJsonLd(args: {
+  name: string;
+  description?: string;
+  items: { name: string; url: string; description?: string }[];
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: args.name,
+    description: args.description,
+    numberOfItems: args.items.length,
+    itemListElement: args.items.map((it, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: it.url,
+      name: it.name,
+      ...(it.description ? { description: it.description } : {}),
+    })),
+  };
+}

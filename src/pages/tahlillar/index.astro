@@ -2,19 +2,42 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import { categoryLabels } from '../../lib/site';
+import { categoryLabels, site } from '../../lib/site';
+import { itemListJsonLd, breadcrumbJsonLd } from '../../lib/schema';
 
 const projects = (await getCollection('projects', ({ data }) => !data.draft && data.lang === 'uz')).sort(
   (a, b) => (b.data.updatedAt ?? b.data.publishedAt).valueOf() - (a.data.updatedAt ?? a.data.publishedAt).valueOf()
 );
 
 const cats = Array.from(new Set(projects.map((p) => p.data.category)));
+
+const description = "O'zbekistondagi loyihalar, kompaniyalar va xizmatlar haqida foydalanuvchi nuqtai nazaridan tekshirilgan tahlillar.";
+
+const jsonLd = [
+  itemListJsonLd({
+    name: 'Barcha tahlillar — Nisbiy.uz',
+    description,
+    items: projects.map((p) => {
+      const slug = p.id.replace(/^(uz|ru)\//, '').replace(/\.[^.]+$/, '');
+      return {
+        name: p.data.title,
+        url: new URL(`/tahlillar/${slug}`, site.url).href,
+        description: p.data.summary,
+      };
+    }),
+  }),
+  breadcrumbJsonLd([
+    { name: 'Asosiy', url: site.url },
+    { name: 'Tahlillar', url: new URL('/tahlillar', site.url).href },
+  ]),
+];
 ---
 
 <BaseLayout
   title="Barcha tahlillar"
-  description="O'zbekistondagi loyihalar, kompaniyalar va xizmatlar haqida foydalanuvchi nuqtai nazaridan tekshirilgan tahlillar."
+  description={description}
   canonical="/tahlillar"
+  jsonLd={jsonLd}
 >
   <section class="mx-auto max-w-[var(--container-wide)] px-4 sm:px-6 pt-10 sm:pt-16">
     <header class="max-w-2xl">

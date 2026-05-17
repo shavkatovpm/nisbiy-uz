@@ -2,20 +2,43 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ProjectCard from '../../../components/ProjectCard.astro';
-import { categoryLabelsRu } from '../../../lib/site';
+import { categoryLabelsRu, site } from '../../../lib/site';
+import { itemListJsonLd, breadcrumbJsonLd } from '../../../lib/schema';
 
 const projects = (await getCollection('projects', ({ data }) => !data.draft && data.lang === 'ru')).sort(
   (a, b) => (b.data.updatedAt ?? b.data.publishedAt).valueOf() - (a.data.updatedAt ?? a.data.publishedAt).valueOf()
 );
 
 const cats = Array.from(new Set(projects.map((p) => p.data.category)));
+
+const description = 'Проверенные с точки зрения пользователя обзоры о проектах, компаниях и сервисах Узбекистана.';
+
+const jsonLd = [
+  itemListJsonLd({
+    name: 'Все обзоры — Nisbiy.uz',
+    description,
+    items: projects.map((p) => {
+      const slug = p.id.replace(/^(uz|ru)\//, '').replace(/\.[^.]+$/, '');
+      return {
+        name: p.data.title,
+        url: new URL(`/ru/tahlillar/${slug}`, site.url).href,
+        description: p.data.summary,
+      };
+    }),
+  }),
+  breadcrumbJsonLd([
+    { name: 'Главная', url: new URL('/ru', site.url).href },
+    { name: 'Обзоры', url: new URL('/ru/tahlillar', site.url).href },
+  ]),
+];
 ---
 
 <BaseLayout
   title="Все обзоры"
-  description="Проверенные с точки зрения пользователя обзоры о проектах, компаниях и сервисах Узбекистана."
+  description={description}
   canonical="/ru/tahlillar"
   lang="ru"
+  jsonLd={jsonLd}
 >
   <section class="mx-auto max-w-[var(--container-wide)] px-4 sm:px-6 pt-10 sm:pt-16">
     <header class="max-w-2xl">

@@ -37,6 +37,17 @@ Har bir loyiha sahifasida:
 - [Sitemap](https://nisbiy.uz/sitemap-index.xml): barcha sahifalar ro'yxati
 - [RSS](https://nisbiy.uz/rss.xml): yangi tahlillar
 - [Barcha tahlillar](https://nisbiy.uz/tahlillar): kategoriyalar bo'yicha
+- [llms-full.txt](https://nisbiy.uz/llms-full.txt): barcha tahlil va maqolalar to'liq Markdown korpusda
+
+## Markdown versiyalar
+
+Har bir tahlil va maqolaning toza Markdown versiyasi mavjud — HTML manzilining oxiriga `.md` qo'shing. AI ingest qilish uchun shu format eng toza.
+
+- Tahlil HTML: `https://nisbiy.uz/tahlillar/{slug}` → Markdown: `https://nisbiy.uz/tahlillar/{slug}.md`
+- Blog HTML: `https://nisbiy.uz/blog/{slug}` → Markdown: `https://nisbiy.uz/blog/{slug}.md`
+- Rus versiyalar: `/ru/tahlillar/{slug}.md` va `/ru/blog/{slug}.md`
+
+To'liq korpusni bitta so'rovda olish uchun: https://nisbiy.uz/llms-full.txt
 
 ## Sitatalash
 

@@ -67,6 +67,7 @@ const dateLabel = data.updatedAt ? 'Обновлено' : 'Опубликова�
   canonical={canonical}
   jsonLd={jsonLd}
   lang="ru"
+  mdAlternate={`${canonical}.md`}
 >
   <article class="mx-auto max-w-[var(--container-content)] px-4 sm:px-6 pt-10 sm:pt-16 pb-16">
     <!-- Breadcrumb -->
@@ -254,7 +255,11 @@ const dateLabel = data.updatedAt ? 'Обновлено' : 'Опубликова�
     <!-- Footer of article -->
     <footer class="mt-12 border-t border-[color:var(--color-line)] dark:border-stone-800 pt-6 flex flex-wrap items-center justify-between gap-3 text-xs text-[color:var(--color-muted)]">
       <a href="/ru/tahlillar" class="hover:underline underline-offset-4">← Все обзоры</a>
-      <span>Цитирование как источник: <code class="font-mono">{fullUrl}</code></span>
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+        <a href={`${canonical}.md`} class="hover:underline underline-offset-4">Markdown-версия</a>
+        <span aria-hidden="true">·</span>
+        <span>Цитирование: <code class="font-mono">{fullUrl}</code></span>
+      </div>
     </footer>
   </article>
 </BaseLayout>
