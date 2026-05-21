@@ -83,10 +83,10 @@ const jsonLd = [
             const slug = entry.id.replace(/^(uz|ru)\//, '').replace(/\.[^.]+$/, '');
             const date = entry.data.updatedAt ?? entry.data.publishedAt;
             return (
-              <article class="group">
+              <article class="group h-full">
                 <a
                   href={`/blog/${slug}`}
-                  class="block rounded-2xl border border-[color:var(--color-line)] dark:border-stone-800 p-5 sm:p-6 transition-all hover:border-[color:var(--color-ink)]/30 dark:hover:border-stone-600 hover:-translate-y-0.5"
+                  class="flex h-full flex-col rounded-2xl border border-[color:var(--color-line)] dark:border-stone-800 p-5 sm:p-6 transition-all hover:border-[color:var(--color-ink)]/30 dark:hover:border-stone-600 hover:-translate-y-0.5"
                 >
                   <div class="flex items-center gap-2 text-xs text-[color:var(--color-muted)]">
                     <span class="uppercase tracking-wider">{blogCategoryLabels[entry.data.category]}</span>
@@ -95,7 +95,7 @@ const jsonLd = [
                       {new Intl.DateTimeFormat('uz-UZ', { year: 'numeric', month: 'short', day: 'numeric' }).format(date)}
                     </time>
                   </div>
-                  <h3 class="mt-2 text-xl font-semibold tracking-tight text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)] group-hover:text-[color:var(--color-accent)] transition-colors">
+                  <h3 class="mt-2 text-xl font-semibold tracking-tight text-[color:var(--color-ink)] dark:text-[color:var(--color-paper)] group-hover:text-[color:var(--color-accent)] transition-colors line-clamp-2">
                     {entry.data.focusQuestion ?? entry.data.title}
                   </h3>
                   <p class="mt-2 text-sm text-[color:var(--color-muted)] line-clamp-3 leading-relaxed">
