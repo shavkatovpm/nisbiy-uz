@@ -40,15 +40,15 @@ export const navRu = [
 
 export const ratingLabels = {
   recommended: { label: 'Tavsiya etiladi', tone: 'fact', minScore: 80 },
-  caution: { label: 'Ehtiyot bo‘ling', tone: 'opinion', minScore: 60 },
-  avoid: { label: 'Tavsiya etilmaydi', tone: 'warn', minScore: 0 },
+  caution: { label: 'Neytral', tone: 'muted', minScore: 60 },
+  avoid: { label: 'Ogohlantirish', tone: 'warn', minScore: 0 },
   unrated: { label: 'Baholanmagan', tone: 'muted', minScore: null },
 } as const;
 
 export const ratingLabelsRu = {
   recommended: { label: 'Рекомендуется', tone: 'fact', minScore: 80 },
-  caution: { label: 'С осторожностью', tone: 'opinion', minScore: 60 },
-  avoid: { label: 'Не рекомендуется', tone: 'warn', minScore: 0 },
+  caution: { label: 'Нейтрально', tone: 'muted', minScore: 60 },
+  avoid: { label: 'Предупреждение', tone: 'warn', minScore: 0 },
   unrated: { label: 'Без оценки', tone: 'muted', minScore: null },
 } as const;
 

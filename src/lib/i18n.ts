@@ -90,7 +90,7 @@ export const t = {
     factsTitle: 'Tekshirilgan faktlar',
     factsHelper: 'manbalar bilan',
     strengthsTitle: 'Kuchli tomonlari',
-    weaknessesTitle: 'Ehtiyot bo‘ling',
+    weaknessesTitle: 'Zaif tomonlari',
     opinionTitle: 'Jamoa fikri',
     opinionFooter: 'Bu — Nisbiy.uz jamoasining subyektiv fikri. Yakuniy qaror sizniki.',
     fullAnalysisSuffix: 'haqida to‘liq tahlil',
@@ -110,8 +110,8 @@ export const t = {
 
     // Ratings
     ratingRecommended: 'Tavsiya etiladi',
-    ratingCaution: 'Ehtiyot bo‘ling',
-    ratingAvoid: 'Tavsiya etilmaydi',
+    ratingCaution: 'Neytral',
+    ratingAvoid: 'Ogohlantirish',
     ratingUnrated: 'Baholanmagan',
 
     // CTA types
@@ -195,7 +195,7 @@ export const t = {
     factsTitle: 'Проверенные факты',
     factsHelper: 'с указанием источников',
     strengthsTitle: 'Сильные стороны',
-    weaknessesTitle: 'Будьте осторожны',
+    weaknessesTitle: 'Слабые стороны',
     opinionTitle: 'Мнение команды',
     opinionFooter: 'Это субъективное мнение команды Nisbiy.uz. Окончательное решение за вами.',
     fullAnalysisSuffix: '— полный обзор',
@@ -213,8 +213,8 @@ export const t = {
     emptyBlog: 'Пока статей нет. Скоро появятся первые публикации.',
 
     ratingRecommended: 'Рекомендуется',
-    ratingCaution: 'С осторожностью',
-    ratingAvoid: 'Не рекомендуется',
+    ratingCaution: 'Нейтрально',
+    ratingAvoid: 'Предупреждение',
     ratingUnrated: 'Без оценки',
 
     ctaEditorial: 'Рекомендация',
